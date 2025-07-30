@@ -1,10 +1,23 @@
 {
   "name": "clinic_appointment_booking",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "concurrently \"npm --prefix backend run dev\" \"npm --prefix frontend run dev\""
   },
-  "private": true
+  "dependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "version": "1.0.0",
+  "description": "To make it easy for you to get started with GitLab, here's a list of recommended next steps.",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/getsetai/clinic_appointment_booking.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/getsetai/clinic_appointment_booking/issues"
+  },
+  "homepage": "https://gitlab.com/getsetai/clinic_appointment_booking#readme"
 }
