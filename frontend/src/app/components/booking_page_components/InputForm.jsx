@@ -27,7 +27,7 @@ export const InputForm = () => {
   return (
     <section
       ref={formRefForScroll}
-      className="w-[75%] font-sans mx-auto min-h-100  rounded-xl shadow-xl border-[1.5px] border-gray-400 "
+      className="w-[85%] font-sans mx-auto min-h-100  rounded-xl shadow-xl border-[1.5px] border-gray-400 "
     >
       <div className=" p-5">
         <div className="flex md:items-center gap-2 md:gap-0 flex-col md:flex-row md:justify-between">
@@ -76,7 +76,7 @@ export const InputForm = () => {
             {/* PHONE NUMBER FIELD  */}
 
             <div className="flex flex-col gap-2">
-              <label className="text-gray-700 flex items-center gap-1 text-sm">
+              <label className="text-gray-700 flex items-center gap-1 text-sm ">
                 <MdOutlinePhone />
                 Phone Number <span className="text-orange-400">*</span>
               </label>

@@ -198,8 +198,7 @@ const AdminDashboard = () => {
                 { id: 'appointments', icon: Clock, label: 'Today\'s Appointments' },
                 { id: 'patients', icon: Users, label: 'Patient Records' },
                 { id: 'messages', icon: MessageSquare, label: 'WhatsApp Messages' },
-                { id: 'billing', icon: IndianRupee, label: 'Billing' },
-                { id: 'settings', icon: Settings, label: 'Settings' }
+               
               ].map((item) => (
                 <li key={item.id}>
                   <button
@@ -426,7 +425,7 @@ const AdminDashboard = () => {
                 </div>
               </div>
               
-              <div className="bg-white rounded-lg shadow overflow-hidden">
+              <div className="bg-white rounded-lg shadow overflow-hidden ">
                 <table className="w-full">
                   <thead className="bg-gray-50">
                     <tr>

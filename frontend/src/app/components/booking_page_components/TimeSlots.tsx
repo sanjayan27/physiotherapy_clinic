@@ -17,7 +17,7 @@ export const TimeSlots = () => {
   
   return dateClicked === false ?(
     <section className="w-full flex font-sans justify-center items-center mb-8">
-      <div className=" w-[70%] bg-gradient-to-t from-teal-100 to-white p-3 rounded-2xl h-70 shadow-xl">
+      <div className=" w-[80%] sm:w-[75%] bg-gradient-to-t from-teal-100 to-white p-3 rounded-2xl h-70 shadow-xl">
         <p className="flex items-center text-2xl gap-1">
             <IoIosTimer className="font-bold" /> Available Time Slots
         </p>
