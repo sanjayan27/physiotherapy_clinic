@@ -1,6 +1,6 @@
 "use client"
 
-import { createContext, useRef, useState } from "react";
+import { createContext, useEffect, useRef, useState } from "react";
 
 export const AppContext = createContext()
 
@@ -8,6 +8,7 @@ export const AppContextProvider = (props)=>{
     const [dateClicked,setDateClicked] = useState(false)
     const [selectedDate, setSelectedDate] = useState(null)
     const [selectedSlots, setSelectedSlots] = useState(null)
+     const [isLogin,setIsLogin] = useState(false)
     const [userLogged, setUserLogged] = useState(false)
     const formRefForScroll = useRef() 
     //for scrolling when user select the slot
@@ -15,6 +16,14 @@ export const AppContextProvider = (props)=>{
         setSelectedSlots(slot)
         formRefForScroll.current?.scrollIntoView({behavior:"smooth"})
     }
+
+    useEffect(() => {
+     const checkUserLoggedIn = localStorage.getItem("isLogin")
+     if (checkUserLoggedIn === "true"){
+        setIsLogin(true)
+     }
+    }, [isLogin])
+    
 
     const value = {
         dateClicked,
@@ -24,7 +33,9 @@ export const AppContextProvider = (props)=>{
         handleScrollToForm,
         formRefForScroll,
         selectedSlots,
-        userLogged
+        userLogged,
+        isLogin,
+        setIsLogin
     }
     return <AppContext.Provider value={value}>
         {props.children}

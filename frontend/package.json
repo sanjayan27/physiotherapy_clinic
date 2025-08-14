@@ -9,7 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
-
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@mui/material": "^7.3.1",
     "lucide-react": "^0.535.0",
     "next": "15.4.5",
     "react": "19.1.0",
@@ -17,13 +19,10 @@
     "react-dom": "19.1.0",
     "react-icons": "^5.5.0",
     "react-router-dom": "^7.7.1"
-
-    
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",
-
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
@@ -36,6 +35,4 @@
   "main": "testfrontend.js",
   "author": "",
   "license": "ISC"
-
-  }
-
+}

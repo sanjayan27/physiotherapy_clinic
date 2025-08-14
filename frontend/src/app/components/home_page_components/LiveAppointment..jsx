@@ -1,78 +1,61 @@
-"use client";
+import React from 'react';
 
-import React from "react";
-import { LiveUpdateBox } from "@/app/components/home_page_components/LiveUpdateBox";
-import { MdTimeline } from "react-icons/md";
-import availablePng from "@/app/assets/pngIcons/check.png";
-import closepng from "@/app/assets/pngIcons/close.png";
-import rescheduledpng from "@/app/assets/pngIcons/reschedule.png";
-import delayedpng from "@/app/assets/pngIcons/expired.png";
-
-const LiveAppointment = () => {
-  const dummyData = [
-    {
-      slotId: "slot_001",
-      time: "2025-08-07T10:30:00",
-      status: "available",
-      doctor: "Dr. Meena",
-      statusIcon: availablePng,
-    },
-    {
-      slotId: "slot_002",
-      time: "2025-08-07T10:45:00",
-      status: "ongoing",
-      doctor: "Dr. Arjun",
-      patient: "Rahul",
-      statusIcon: availablePng,
-    },
-    {
-      slotId: "slot_003",
-      time: "2025-08-07T11:00:00",
-      status: "delayed",
-      doctor: "Dr. Meena",
-      expectedStartTime: "2025-08-07T11:10:00",
-      note: "Doctor running late",
-      statusIcon: delayedpng,
-    },
-    {
-      slotId: "slot_004",
-      time: "2025-08-07T11:15:00",
-      status: "cancelled",
-      doctor: "Dr. Ravi",
-      note: "Doctor unavailable",
-      statusIcon: closepng,
-    },
-    {
-      slotId: "slot_005",
-      time: "2025-08-07T11:30:00",
-      status: "rescheduled",
-      doctor: "Dr. Meena",
-      rescheduledTo: "2025-08-07T12:00:00",
-      note: "Rescheduled by admin",
-      statusIcon: rescheduledpng,
-    },
-  ];
-
+const DelayNotification = () => {
   return (
-    <section className="w-full min-h-[50vh] flex justify-center items-center">
-      <section className="flex flex-col w-screen p-5 ">
-        <header className="text-center text-3xl font-sans font-bold mb-3">Live Appointmen Update</header>
-        <main>
-          <section className="grid grid-cols-3 gap-15 mt-5 items-center">
-            {dummyData.map((slot) => (
-              <LiveUpdateBox
-                key={slot.slotId}
-                content={slot.status}
-                time={slot.time}
-                statusIcon={slot.statusIcon}
-                note={slot.note}
-                updatedTime={slot.expectedStartTime || slot.rescheduledTo}
+    <div className="flex justify-center items-center h-fit  my-10 p-4">
+      <div className="bg-white rounded-2xl shadow-xl p-8 max-w-md w-full relative overflow-hidden">
+        
+        {/* Decorative background circle */}
+        <div className="absolute top-[-100px] right-[-100px] w-64 h-64 bg-teal-500 rounded-full opacity-10"></div>
+        
+        <div className="flex justify-between items-start mb-6">
+          <div className="flex items-center space-x-3">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-8 w-8 text-red-500 animate-pulse"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path
+                fillRule="evenodd"
+                d="M10 18a8 8 0 100-16 8 8 0 000 16zm-1-11a1 1 0 10-2 0v2H6a1 1 0 100 2h1v2a1 1 0 102 0v-2h1a1 1 0 100-2h-1V7z"
+                clipRule="evenodd"
               />
-            ))}
-          </section>
-        </main>
-      </section>
-    </section>
+            </svg>
+            <h2 className="text-xl font-bold text-gray-800">Delayed Slot</h2>
+          </div>
+          <span className="text-sm text-gray-500 font-medium">120 mins</span>
+        </div>
+
+        <p className="text-2xl font-light text-gray-900 leading-snug mb-4">
+          The slot at <strong className="font-semibold text-red-500">11:20 AM</strong> is delayed.
+        </p>
+        
+        <div className="border-t-2 border-gray-100 pt-4 mt-4">
+          <p className="text-sm text-gray-500 mb-2">New Scheduled Time:</p>
+          <div className="flex items-center space-x-4">
+            <div className="bg-teal-500 p-2 rounded-full">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6 text-white"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
+              </svg>
+            </div>
+            <span className="text-4xl font-extrabold text-teal-600">01:20 PM</span>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
-export default LiveAppointment;
+
+export default DelayNotification;

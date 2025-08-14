@@ -10,7 +10,7 @@ export default function GetInTouch() {
             Get In Touch
           </h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            We're here to help you on your journey to better health
+            We are here to help you on your journey to better health
           </p>
         </div>
 
