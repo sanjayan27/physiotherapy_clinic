@@ -8,7 +8,7 @@ import { LogOut,  HeartPlus } from 'lucide-react';
     const {isLogin}  = useContext(AppContext)
   return isLogin && (
     <section className='mb-12  flex flex-col gap-3 '>
-        <p className=' py-4 w-full px-2 rounded text-gray-700 hover:text-teal-700 hover:bg-teal-50 border-b border-gray-100 transition-colors duration-150 flex flex-row items-center cursor-pointer gap-1' ><HeartPlus size={17}/>Support</p> 
+        <p className=' py-4 w-full px-2 rounded text-gray-700 hover:text-teal-700 hover:bg-teal-50 border-b border-gray-100 transition-colors duration-150 flex flex-row items-center cursor-pointer gap-1' ><HeartPlus size={17}/>Your Details</p> 
         <p  className=' py-4 w-full px-2 rounded text-gray-700 hover:text-teal-700 hover:bg-teal-50 border-b border-gray-100 transition-colors duration-150 flex flex-row cursor-pointer items-center gap-1'  onClick={() => handleUserAction("logout")}  > <LogOut size={17}/> Log Out</p>
     </section>
   )

@@ -26,12 +26,6 @@ const NAVIGATION_LINKS = [
     index: 14,
     icon: <BookUser size={17} />,
   },
-  {
-    href: "/user-details",
-    label: "Details",
-    index: 16,
-    icon: <ListCollapse size={17} />,
-  },
 ] as const;
 
 export const Header = () => {
@@ -124,8 +118,8 @@ export const Header = () => {
         <div className="flex justify-between items-center py-4">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 group">
-            <BsCalendar4Event className="w-7 h-7 text-teal-600 transition-transform duration-200 group-hover:scale-110" />
-            <span className="font-extrabold text-2xl text-teal-600 tracking-wide">
+            <BsCalendar4Event className="w-7 h-7 global-text-color-teal transition-transform duration-200 group-hover:scale-110" />
+            <span className="font-extrabold text-2xl global-text-color-teal tracking-wide">
               Clinic Name
             </span>
           </Link>

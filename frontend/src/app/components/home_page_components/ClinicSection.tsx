@@ -1,15 +1,15 @@
-"use client"
+"use client";
 
-import { CheckCircle, Clock, Users } from 'lucide-react';
+import { CheckCircle, Clock, Users } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 export default function ClinicSection() {
-    const router = useRouter()
-  
-    const navigate = ()=>{
-      router.push("/book-appointment")
-    }
-  
+  const router = useRouter();
+
+  const navigate = () => {
+    router.push("/book-appointment");
+  };
+
   return (
     <div className="bg-gray-50 py-16 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
@@ -19,12 +19,12 @@ export default function ClinicSection() {
             <h2 className="text-4xl font-bold font-sans text-gray-900 mb-12">
               Why Choose Our Clinic?
             </h2>
-            
+
             <div className="space-y-8">
               {/* Expert Physiotherapists */}
               <div className="flex items-start">
                 <div className="flex-shrink-0">
-                  <div className="w-8 h-8 bg-teal-600 rounded-full flex items-center justify-center">
+                  <div className="w-8 h-8 global-bg-color  rounded-full flex items-center justify-center">
                     <CheckCircle className="w-5 h-5 text-white" />
                   </div>
                 </div>
@@ -41,7 +41,7 @@ export default function ClinicSection() {
               {/* Flexible Scheduling */}
               <div className="flex items-start">
                 <div className="flex-shrink-0">
-                  <div className="w-8 h-8 bg-teal-600 rounded-full flex items-center justify-center">
+                  <div className="w-8 h-8 global-bg-color  rounded-full flex items-center justify-center">
                     <Clock className="w-5 h-5 text-white" />
                   </div>
                 </div>
@@ -58,7 +58,7 @@ export default function ClinicSection() {
               {/* Personalized Care */}
               <div className="flex items-start">
                 <div className="flex-shrink-0">
-                  <div className="w-8 h-8 bg-teal-600 rounded-full flex items-center justify-center">
+                  <div className="w-8 h-8 global-bg-color  rounded-full flex items-center justify-center">
                     <Users className="w-5 h-5 text-white" />
                   </div>
                 </div>
@@ -67,7 +67,8 @@ export default function ClinicSection() {
                     Personalized Care
                   </h3>
                   <p className="text-gray-600">
-                    Treatment plans tailored to your specific condition and goals
+                    Treatment plans tailored to your specific condition and
+                    goals
                   </p>
                 </div>
               </div>
@@ -80,9 +81,13 @@ export default function ClinicSection() {
               Ready to Start Your Recovery?
             </h3>
             <p className="text-gray-600 mb-8 leading-relaxed">
-              Book your consultation today and take the first step towards a pain-free life.
+              Book your consultation today and take the first step towards a
+              pain-free life.
             </p>
-            <button  onClick={navigate} className="w-full bg-teal-600 hover:bg-teal-700 text-white font-semibold py-4 px-8 rounded-lg transition-colors duration-200 font-sans cursor-pointer">
+            <button
+              onClick={navigate}
+              className="w-full global-bg-color  hover:bg-teal-700 text-white font-semibold py-4 px-8 rounded-lg transition-colors duration-200 font-sans cursor-pointer"
+            >
               Schedule Consultation
             </button>
           </div>

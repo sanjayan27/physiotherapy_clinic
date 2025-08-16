@@ -9,14 +9,11 @@ export const InputForm = () => {
   const { formRefForScroll, selectedSlots, selectedDate } =
     useContext(AppContext);
 
-    const [fullName, setFullName] = useState("")
-    const [phoneNumber, setPhoneNumber] = useState("")
-    const [email, setEmail] = useState('')
-    const [concerns, setConcerns] = useState('')
-    const [additionalNotes, setAdditionalNotes] = useState('')
-    
-
-
+  const [fullName, setFullName] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [email, setEmail] = useState("");
+  const [concerns, setConcerns] = useState("");
+  const [additionalNotes, setAdditionalNotes] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -31,7 +28,7 @@ export const InputForm = () => {
     >
       <div className=" p-5">
         <div className="flex md:items-center gap-2 md:gap-0 flex-col md:flex-row md:justify-between">
-          <p className="flex gap-1 font-bold text-teal-600">
+          <p className="flex gap-1 font-bold global-text-color-teal">
             <User />
             <span className="text-2xl text-gray-600 ">Patient Information</span>
           </p>
@@ -54,12 +51,12 @@ export const InputForm = () => {
                 type="text"
                 placeholder="Enter your full name"
                 className="border rounded p-2 outline-none bg-transparent border-gray-400 "
-                value={fullName} 
-                onChange={(e)=>setFullName(e.target.value)}
+                value={fullName}
+                onChange={(e) => setFullName(e.target.value)}
               />
             </div>
 
-            {/* DATE INPUT FIELD  */}
+            {/* DATE INPUT FIELD 
 
             <div className="flex flex-col gap-2">
               <label className="text-gray-700  text-sm">Date: </label>
@@ -69,9 +66,8 @@ export const InputForm = () => {
                 placeholder="select the date from calender"
                 disabled
                 className="border rounded p-2 outline-none bg-transparent border-gray-400 "
-                
               />
-            </div>
+            </div> */}
 
             {/* PHONE NUMBER FIELD  */}
 
@@ -92,37 +88,13 @@ export const InputForm = () => {
                  border-gray-400 [appearance:textfield] 
              [&::-webkit-outer-spin-button]:appearance-none 
              [&::-webkit-inner-spin-button]:appearance-none"
-             value={phoneNumber} 
-                onChange={(e)=>setPhoneNumber(e.target.value)}
+                  value={phoneNumber}
+                  onChange={(e) => setPhoneNumber(e.target.value)}
                 />
-                <button className=" cursor-pointer text-sm  p-2 md:text-xs md:px-1 lg-p-2 rounded bg-teal-600 text-white  border-teal-700">
-                  Send OTP
-                </button>
               </div>
             </div>
 
-            {/* OTP FIELD  */}
-
-            <div className="flex flex-col gap-2">
-              <label className="text-gray-700 flex items-center gap-1 text-sm">
-                OTP <span className="text-orange-400">*</span>
-              </label>
-              <div
-                className="bg-transparent 
-                 border-gray-400 border rounded flex flex-row justify-between  "
-              >
-                <input
-                  type="number"
-                  placeholder="0 0 0 0 0 0"
-                  className=" p-2 outline-none w-30 [appearance:textfield] 
-             [&::-webkit-outer-spin-button]:appearance-none 
-             [&::-webkit-inner-spin-button]:appearance-none"
-                />
-                <button className=" p-2 border border-teal-600 text-sm rounded bg-teal-600 text-white cursor-pointer">
-                  Verify
-                </button>
-              </div>
-            </div>
+          
 
             {/* EMAIL FIELD  */}
 
@@ -135,8 +107,8 @@ export const InputForm = () => {
                 type="text"
                 placeholder="your.email@gmail.com"
                 className="border rounded p-2 outline-none bg-transparent border-gray-400  "
-                value={email} 
-                onChange={(e)=>setEmail(e.target.value)}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </div>
 
@@ -152,8 +124,8 @@ export const InputForm = () => {
                 required
                 className="border rounded p-2 py-[10px] outline-none bg-transparent border-gray-400  "
                 name="condition"
-                value={concerns} 
-                onChange={(e)=>setConcerns(e.target.value)}
+                value={concerns}
+                onChange={(e) => setConcerns(e.target.value)}
               >
                 <option value="">Select your condition</option>
                 <option>Back Pain</option>
@@ -169,8 +141,15 @@ export const InputForm = () => {
             </div>
           </div>
 
+            
+          <div className="mt-5 flex flex-col gap-2">
+            <label className="text-gray-700 text-sm">
+              {" "}
+              Upload Documents
+            </label>
+           <input type="file" className="" />
+          </div>
           {/* ADDITIONAL NOTES FIELD  */}
-
           <div className="mt-5 flex flex-col gap-2">
             <label className="text-gray-700 text-sm">
               {" "}
@@ -180,15 +159,16 @@ export const InputForm = () => {
               type="text"
               className="border w-full rounded p-1 outline-none border-gray-400 "
               placeholder="Enter your additional notes here"
-              value={additionalNotes} 
-                onChange={(e)=>setAdditionalNotes(e.target.value)}
+              value={additionalNotes}
+              onChange={(e) => setAdditionalNotes(e.target.value)}
             />
           </div>
 
+
           {/* SUBMITION FIELD  */}
 
-          <button className="w-full bg-teal-600 p-2 rounded-lg  cursor-pointer text-white mt-7">
-            Confirm Appointment
+          <button className="w-full global-bg-color  p-2 rounded-lg  cursor-pointer text-white mt-7">
+            Submit Your Details
           </button>
         </form>
       </div>

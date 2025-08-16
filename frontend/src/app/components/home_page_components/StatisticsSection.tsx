@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from "react";
 
 // Counter animation hook with cleanup
 function useCountUp(target: unknown, duration = 2000) {
@@ -9,14 +9,15 @@ function useCountUp(target: unknown, duration = 2000) {
 
   useEffect(() => {
     let startTime: number | undefined;
-    const numericTarget = typeof target === 'number' ? target : parseInt(target as string, 10);
-    
+    const numericTarget =
+      typeof target === "number" ? target : parseInt(target as string, 10);
+
     const animate = (timestamp: number) => {
       if (startTime === undefined) startTime = timestamp;
       const progress = Math.min((timestamp - startTime) / duration, 1);
-      
+
       setCount(Math.floor(progress * numericTarget));
-      
+
       if (progress < 1) {
         requestRef.current = requestAnimationFrame(animate);
       }
@@ -43,28 +44,38 @@ type StatItemProps = {
   color?: string;
 };
 
-const StatItem = ({ number, suffix = '', label, color = 'teal' }: StatItemProps) => {
+const StatItem = ({
+  number,
+  suffix = "",
+  label,
+  color = "teal",
+}: StatItemProps) => {
   const animatedNumber = useCountUp(parseInt(number as string));
-  
+
   const getColorClass = (color: string) => {
     switch (color) {
-      case 'teal':
-        return 'text-teal-600';
-      case 'green':
-        return 'text-teal-600';
-      case 'blue':
-        return 'text-teal-600';
-      case 'cyan':
-        return 'text-teal-600';
+      case "teal":
+        return "global-text-color-teal";
+      case "green":
+        return "global-text-color-teal";
+      case "blue":
+        return "global-text-color-teal";
+      case "cyan":
+        return "global-text-color-teal";
       default:
-        return 'text-teal-600';
+        return "global-text-color-teal";
     }
   };
 
   return (
     <div className="text-center my-5">
-      <div className={`text-4xl md:text-5xl lg:text-6xl font-bold ${getColorClass(color)} mb-2`}>
-        {animatedNumber}{suffix}
+      <div
+        className={`text-4xl md:text-5xl lg:text-6xl font-bold ${getColorClass(
+          color
+        )} mb-2`}
+      >
+        {animatedNumber}
+        {suffix}
       </div>
       <div className="text-gray-600 text-base md:text-lg font-medium">
         {label}
@@ -91,12 +102,7 @@ const StatisticsSection = () => {
             label="Years Experience"
             color="green"
           />
-          <StatItem
-            number="95"
-            suffix="%"
-            label="Success Rate"
-            color="blue"
-          />
+          <StatItem number="95" suffix="%" label="Success Rate" color="blue" />
           <StatItem
             number="24"
             suffix="/7"

@@ -1,4 +1,4 @@
-import { Phone, Mail, MapPin } from 'lucide-react';
+import { Phone, Mail, MapPin } from "lucide-react";
 
 export default function GetInTouch() {
   return (
@@ -19,37 +19,29 @@ export default function GetInTouch() {
           {/* Phone */}
           <div className="text-center">
             <div className="flex justify-center mb-6">
-              <div className="w-16 h-16 bg-teal-600 rounded-2xl flex items-center justify-center">
+              <div className="w-16 h-16 global-bg-color  rounded-2xl flex items-center justify-center">
                 <Phone className="w-8 h-8 text-white" />
               </div>
             </div>
-            <h3 className="text-xl font-semibold text-gray-900 mb-3">
-              Phone
-            </h3>
-            <p className="text-gray-600 text-lg">
-              +91 1234567890
-            </p>
+            <h3 className="text-xl font-semibold text-gray-900 mb-3">Phone</h3>
+            <p className="text-gray-600 text-lg">+91 1234567890</p>
           </div>
 
           {/* Email */}
           <div className="text-center">
             <div className="flex justify-center mb-6">
-              <div className="w-16 h-16 bg-teal-600 rounded-2xl flex items-center justify-center">
+              <div className="w-16 h-16 global-bg-color  rounded-2xl flex items-center justify-center">
                 <Mail className="w-8 h-8 text-white" />
               </div>
             </div>
-            <h3 className="text-xl font-semibold text-gray-900 mb-3">
-              Email
-            </h3>
-            <p className="text-gray-600 text-lg">
-              info@clinic.com
-            </p>
+            <h3 className="text-xl font-semibold text-gray-900 mb-3">Email</h3>
+            <p className="text-gray-600 text-lg">info@clinic.com</p>
           </div>
 
           {/* Location */}
           <div className="text-center">
             <div className="flex justify-center mb-6">
-              <div className="w-16 h-16 bg-teal-600 rounded-2xl flex items-center justify-center">
+              <div className="w-16 h-16 global-bg-color  rounded-2xl flex items-center justify-center">
                 <MapPin className="w-8 h-8 text-white" />
               </div>
             </div>

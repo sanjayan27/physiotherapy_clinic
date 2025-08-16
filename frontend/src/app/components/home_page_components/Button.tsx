@@ -5,18 +5,12 @@ import { ReactNode } from "react";
 const Button = ({
   icon,
   name_button,
-  border,
-  background,
-  hover,
-  text_color,
+  style,
   navigation
 }: {
   icon?: ReactNode;
   name_button: string;
-  border:string;
-  background:string;
-  hover:string;
-  text_color:string;
+  style:string,
   navigation : string
 }) => {
 
@@ -27,7 +21,7 @@ const Button = ({
   }
 
   return (
-    <button onClick={navigate} className={`flex items-center gap-2 py-3 px-4 text-xs md:text-[16px] mt-4   rounded  ${background} ${hover} cursor-pointer transition font-sans ${border} ${text_color} `}>
+    <button onClick={navigate} className={`flex items-center gap-2 py-3 px-4 text-xs md:text-[16px] mt-4   rounded  cursor-pointer transition font-sans ${style} `}>
       {icon && <span className="text-lg ">{icon}</span>}
       <span className="font-semibold">{name_button}</span>
     </button>

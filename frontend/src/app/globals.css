@@ -9,7 +9,6 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-  
 }
 
 @media (prefers-color-scheme: dark) {
@@ -22,18 +21,18 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family:  sans-serif;
 }
-body::-webkit-scrollbar{
+body::-webkit-scrollbar {
   display: none;
 }
-.text-saan{
+.text-saan {
   color: #1ab0a1;
 }
 
 /* globals.css */
 .title {
-  font-family: var(--font-nunito);
+  @apply  font-sans;
 }
 
 .heading {
@@ -44,4 +43,10 @@ body::-webkit-scrollbar{
   font-family: var(--font-oswald);
 }
 
+.global-bg-color {
+  @apply bg-teal-600;
+}
 
+.global-text-color-teal{
+  @apply text-teal-600
+}

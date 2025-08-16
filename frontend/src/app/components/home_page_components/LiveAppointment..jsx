@@ -1,13 +1,12 @@
-import React from 'react';
+import React from "react";
 
 const DelayNotification = () => {
   return (
     <div className="flex justify-center items-center h-fit  my-10 p-4">
       <div className="bg-white rounded-2xl shadow-xl p-8 max-w-md w-full relative overflow-hidden">
-        
         {/* Decorative background circle */}
         <div className="absolute top-[-100px] right-[-100px] w-64 h-64 bg-teal-500 rounded-full opacity-10"></div>
-        
+
         <div className="flex justify-between items-start mb-6">
           <div className="flex items-center space-x-3">
             <svg
@@ -28,9 +27,11 @@ const DelayNotification = () => {
         </div>
 
         <p className="text-2xl font-light text-gray-900 leading-snug mb-4">
-          The slot at <strong className="font-semibold text-red-500">11:20 AM</strong> is delayed.
+          The slot at{" "}
+          <strong className="font-semibold text-red-500">11:20 AM</strong> is
+          delayed.
         </p>
-        
+
         <div className="border-t-2 border-gray-100 pt-4 mt-4">
           <p className="text-sm text-gray-500 mb-2">New Scheduled Time:</p>
           <div className="flex items-center space-x-4">
@@ -50,7 +51,9 @@ const DelayNotification = () => {
                 />
               </svg>
             </div>
-            <span className="text-4xl font-extrabold text-teal-600">01:20 PM</span>
+            <span className="text-4xl font-extrabold global-text-color-teal">
+              01:20 PM
+            </span>
           </div>
         </div>
       </div>

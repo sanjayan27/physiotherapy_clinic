@@ -94,7 +94,7 @@ export default function AboutPage() {
               {/* Stats or additional info */}
               <div className="grid grid-cols-3 gap-6 pt-8">
                 <div className="text-center">
-                  <div className="text-3xl font-bold text-teal-600 mb-2">500+</div>
+                  <div className="text-3xl font-bold global-text-color-teal mb-2">500+</div>
                   <div className="text-sm text-gray-600">Happy Patients</div>
                 </div>
                 <div className="text-center">
@@ -102,7 +102,7 @@ export default function AboutPage() {
                   <div className="text-sm text-gray-600">Years Experience</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-3xl font-bold text-teal-600 mb-2">24/7</div>
+                  <div className="text-3xl font-bold global-text-color-teal mb-2">24/7</div>
                   <div className="text-sm text-gray-600">Support</div>
                 </div>
               </div>
