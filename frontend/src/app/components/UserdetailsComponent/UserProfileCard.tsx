@@ -36,7 +36,7 @@ const UserProfileCard = () => {
         </div>
       </figure>
 
-      <section className=" w-full py-4 px-2 ">
+      <section className=" overflow-hidden w-full py-4 px-2 ">
         <UserInfo stats={stats} />
       </section>
     </main>

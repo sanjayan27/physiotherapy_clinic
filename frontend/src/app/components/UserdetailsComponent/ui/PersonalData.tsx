@@ -1,7 +1,8 @@
 "use client";
+import { ReactNode } from "react";
 
 interface PersonalData {
-  icon : string,
+  icon : ReactNode,
   name : string
 }
 
