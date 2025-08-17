@@ -190,7 +190,7 @@ export const Header = () => {
               <div className="">
                 <NavigationLinks isMobile />
               </div>
-              <FunctioningLinks handleUserAction={handleUserAction} />
+              <FunctioningLinks handleUserAction={handleUserAction}  closeMenu={closeMenu} isMobile/>
             </div>
             {!isLogin && (
               <div className="p-4 border-t border-gray-100 ">

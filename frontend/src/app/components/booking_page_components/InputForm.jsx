@@ -1,177 +1,322 @@
-"use client";
-
-import React, { useContext, useEffect, useState } from "react";
-import { User, Phone, Mail } from "lucide-react";
-import { MdOutlinePhone, MdOutlineEmail } from "react-icons/md";
+import React, { useContext, useState } from "react";
+import {
+  User,
+  Phone,
+  Mail,
+  Calendar,
+  FileText,
+  Upload,
+  Heart,
+  Sparkles,
+} from "lucide-react";
 import { AppContext } from "@/app/context/AppContext";
 
-export const InputForm = () => {
-  const { formRefForScroll, selectedSlots, selectedDate } =
-    useContext(AppContext);
+export default function PatientInformationForm({ existingUser }) {
+  const [formData, setFormData] = useState({
+    fullName: "",
+    phoneNumber: "",
+    email: "",
+    concerns: "",
+    additionalNotes: "",
+    uploadedFile: null,
+  });
+  
+  const { formRefForScroll } = useContext(AppContext);
+  const [selectedDate] = useState("March 15, 2024");
+  const [selectedSlots] = useState("10:30 AM - 11:00 AM");
+  const [focusedField, setFocusedField] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const [fullName, setFullName] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [email, setEmail] = useState("");
-  const [concerns, setConcerns] = useState("");
-  const [additionalNotes, setAdditionalNotes] = useState("");
+  const handleInputChange = (field, value) => {
+    setFormData((prev) => ({ ...prev, [field]: value }));
+  };
+
+  const handleFileUpload = (e) => {
+    const file = e.target.files[0];
+    setFormData((prev) => ({ ...prev, uploadedFile: file }));
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsSubmitting(true);
 
-    alert("thank you for booking your slot");
+    // Simulate API call
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+
+    alert("Thank you for booking your appointment! We will contact you soon.");
+    setIsSubmitting(false);
   };
 
+  const conditionOptions = [
+    "Back Pain",
+    "Neck Pain",
+    "Knee Injury",
+    "Sports Injury",
+    "Post-Surgery Recovery",
+    "Arthritis",
+    "Shoulder Pain",
+    "Headaches",
+    "Other",
+  ];
+
   return (
-    <section
+    <div
+      
       ref={formRefForScroll}
-      className="w-[85%] font-sans mx-auto min-h-100  rounded-xl shadow-xl border-[1.5px] border-gray-400 "
+      className="min-h-screen  p-4 flex items-center justify-center flex-col font-sans"
     >
-      <div className=" p-5">
-        <div className="flex md:items-center gap-2 md:gap-0 flex-col md:flex-row md:justify-between">
-          <p className="flex gap-1 font-bold global-text-color-teal">
-            <User />
-            <span className="text-2xl text-gray-600 ">Patient Information</span>
-          </p>
-          {selectedDate && selectedSlots && (
-            <p className="text-gray-500 text-sm">
-              Selected Slot ( {selectedDate} , {selectedSlots} )
-            </p>
-          )}
-        </div>
-        <form className="mt-5 " onSubmit={handleSubmit}>
-          <div className="grid gap-5 grid-cols-1 md:grid-cols-2 ">
-            {/* FULL NAME INPUT FIELD */}
-
-            <div className="flex flex-col gap-2">
-              <label className="text-gray-700  text-sm">
-                Full Name <span className="text-orange-400">*</span>
-              </label>
-              <input
-                required
-                type="text"
-                placeholder="Enter your full name"
-                className="border rounded p-2 outline-none bg-transparent border-gray-400 "
-                value={fullName}
-                onChange={(e) => setFullName(e.target.value)}
-              />
+      <div className="w-full  mx-auto">
+        {/* Main Form Container */}
+        <div className="backdrop-blur-lg bg-white/80 rounded-3xl shadow-2xl border border-white/20 overflow-hidden">
+          {/* Selected Slot Banner */}
+          {existingUser && selectedDate && selectedSlots && (
+            <div className="bg-gradient-to-r from-teal-500 to-blue-600 px-6 py-4">
+              <div className="flex items-center justify-center gap-3 text-white">
+                <Calendar className="w-5 h-5" />
+                <span className="font-medium">
+                  Selected Appointment: {selectedDate} at {selectedSlots}
+                </span>
+                <Sparkles className="w-5 h-5" />
+              </div>
             </div>
+          )}
 
-            {/* DATE INPUT FIELD 
+          {/* Form Header */}
+          <div className="px-8 py-5 border-b border-gray-100">
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-teal-100 rounded-xl">
+                <User className="w-6 h-6 text-teal-600" />
+              </div>
+              <h2 className="text-2xl font-bold text-gray-800">
+                Patient Information
+              </h2>
+            </div>
+          </div>
 
-            <div className="flex flex-col gap-2">
-              <label className="text-gray-700  text-sm">Date: </label>
-              <input
-                type="text"
-                value={selectedDate ? selectedDate : ""}
-                placeholder="select the date from calender"
-                disabled
-                className="border rounded p-2 outline-none bg-transparent border-gray-400 "
-              />
-            </div> */}
+          {/* Form Content */}
+          <div className="p-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+              {/* Full Name */}
+              <div className="space-y-2">
+                <label className="flex items-center gap-2 text-sm font-medium text-gray-700">
+                  <User className="w-4 h-4" />
+                  Full Name <span className="text-red-500">*</span>
+                </label>
+                <div className="relative">
+                  <input
+                    type="text"
+                    required
+                    placeholder="Enter your full name"
+                    className={`w-full px-4 py-3 rounded-xl border-2 transition-all duration-300 bg-white/50 backdrop-blur-sm ${
+                      focusedField === "fullName"
+                        ? "border-teal-500 shadow-lg shadow-teal-500/20"
+                        : "border-gray-200 hover:border-gray-300"
+                    }`}
+                    value={formData.fullName}
+                    onChange={(e) =>
+                      handleInputChange("fullName", e.target.value)
+                    }
+                    onFocus={() => setFocusedField("fullName")}
+                    onBlur={() => setFocusedField("")}
+                  />
+                </div>
+              </div>
 
-            {/* PHONE NUMBER FIELD  */}
+              {/* Phone Number */}
+              <div className="space-y-2">
+                <label className="flex items-center gap-2 text-sm font-medium text-gray-700">
+                  <Phone className="w-4 h-4" />
+                  Phone Number <span className="text-red-500">*</span>
+                </label>
+                <div className="relative">
+                  <input
+                    type="number"
+                    required
+                    placeholder="+91 00000 00000"
+                    className={`w-full px-4 py-3 rounded-xl border-2 transition-all duration-300 bg-white/50 backdrop-blur-sm ${
+                      focusedField === "phone"
+                        ? "border-teal-500 shadow-lg shadow-teal-500/20"
+                        : "border-gray-200 hover:border-gray-300"
+                    }`}
+                    value={formData.phoneNumber}
+                    onChange={(e) =>
+                      handleInputChange("phoneNumber", e.target.value)
+                    }
+                    onFocus={() => setFocusedField("phone")}
+                    onBlur={() => setFocusedField("")}
+                  />
+                </div>
+              </div>
 
-            <div className="flex flex-col gap-2">
-              <label className="text-gray-700 flex items-center gap-1 text-sm ">
-                <MdOutlinePhone />
-                Phone Number <span className="text-orange-400">*</span>
-              </label>
-              <div
-                className="bg-transparent 
-                 border-gray-400 border rounded flex flex-row justify-between "
-              >
-                <input
-                  type="number"
-                  required
-                  placeholder="+91 00000 00000"
-                  className=" outline-none p-2 bg-transparent 
-                 border-gray-400 [appearance:textfield] 
-             [&::-webkit-outer-spin-button]:appearance-none 
-             [&::-webkit-inner-spin-button]:appearance-none"
-                  value={phoneNumber}
-                  onChange={(e) => setPhoneNumber(e.target.value)}
-                />
+              {/* Email */}
+              <div className="space-y-2">
+                <label className="flex items-center gap-2 text-sm font-medium text-gray-700">
+                  <Mail className="w-4 h-4" />
+                  Email Address
+                </label>
+                <div className="relative">
+                  <input
+                    type="email"
+                    placeholder="your.email@gmail.com"
+                    className={`w-full px-4 py-3 rounded-xl border-2 transition-all duration-300 bg-white/50 backdrop-blur-sm ${
+                      focusedField === "email"
+                        ? "border-teal-500 shadow-lg shadow-teal-500/20"
+                        : "border-gray-200 hover:border-gray-300"
+                    }`}
+                    value={formData.email}
+                    onChange={(e) => handleInputChange("email", e.target.value)}
+                    onFocus={() => setFocusedField("email")}
+                    onBlur={() => setFocusedField("")}
+                  />
+                </div>
+              </div>
+
+              {/* Concerns */}
+              <div className="space-y-2">
+                <label className="flex items-center gap-2 text-sm font-medium text-gray-700">
+                  <Heart className="w-4 h-4" />
+                  Medical Concerns <span className="text-red-500">*</span>
+                </label>
+                <div className="relative">
+                  <select
+                    required
+                    className={`w-full px-4 py-3 rounded-xl border-2 transition-all duration-300 bg-white/50 backdrop-blur-sm appearance-none cursor-pointer ${
+                      focusedField === "concerns"
+                        ? "border-teal-500 shadow-lg shadow-teal-500/20"
+                        : "border-gray-200 hover:border-gray-300"
+                    }`}
+                    value={formData.concerns}
+                    onChange={(e) =>
+                      handleInputChange("concerns", e.target.value)
+                    }
+                    onFocus={() => setFocusedField("concerns")}
+                    onBlur={() => setFocusedField("")}
+                  >
+                    <option value="">Select your condition</option>
+                    {conditionOptions.map((option, index) => (
+                      <option key={index} value={option}>
+                        {option}
+                      </option>
+                    ))}
+                  </select>
+                  <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                    <svg
+                      className="w-5 h-5 text-gray-400"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M19 9l-7 7-7-7"
+                      />
+                    </svg>
+                  </div>
+                </div>
               </div>
             </div>
 
-          
+            {/* File Upload */}
+            {!existingUser && <div>
+              {formData.concerns === "Other" ? (
+              <div className="mb-6 space-y-2">
+                <label className="flex items-center gap-2 text-sm font-medium text-gray-700">
+                  <Upload className="w-4 h-4" />
+                  Upload Medical Documents
+                </label>
+                <div
+                  className={`relative border-2 border-dashed rounded-xl p-6 transition-all duration-300 ${
+                    formData.uploadedFile
+                      ? "border-teal-500 bg-teal-50"
+                      : "border-gray-300 hover:border-gray-400"
+                  }`}
+                >
+                  <input
+                    type="file"
+                    onChange={handleFileUpload}
+                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                    accept=".pdf,.jpg,.jpeg,.png,.doc,.docx"
+                  />
+                  <div className="text-center">
+                    <Upload
+                      className={`mx-auto h-12 w-12 ${
+                        formData.uploadedFile
+                          ? "text-teal-500"
+                          : "text-gray-400"
+                      }`}
+                    />
+                    <p className="mt-2 text-sm text-gray-600">
+                      {formData.uploadedFile
+                        ? `Selected: ${formData.uploadedFile.name}`
+                        : "Click to upload or drag and drop files here"}
+                    </p>
+                    <p className="text-xs text-gray-500">
+                      PDF, DOC, JPG, PNG up to 10MB
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ):(<div></div>)}
+            </div>}
 
-            {/* EMAIL FIELD  */}
-
-            <div className="flex flex-col gap-2">
-              <label className="text-gray-700 flex items-center gap-1 text-sm">
-                <MdOutlineEmail />
-                Email:
+            {/* Additional Notes */}
+            <div className="mb-8 space-y-2">
+              <label className="flex items-center gap-2 text-sm font-medium text-gray-700">
+                <FileText className="w-4 h-4" />
+                Additional Notes{" "}
+                <span className="text-gray-400">(optional)</span>
               </label>
-              <input
-                type="text"
-                placeholder="your.email@gmail.com"
-                className="border rounded p-2 outline-none bg-transparent border-gray-400  "
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+              <textarea
+                rows={4}
+                placeholder="Please share any additional information about your condition or specific requirements..."
+                className={`w-full px-4 py-3 rounded-xl border-2 transition-all duration-300 bg-white/50 backdrop-blur-sm resize-none ${
+                  focusedField === "notes"
+                    ? "border-teal-500 shadow-lg shadow-teal-500/20"
+                    : "border-gray-200 hover:border-gray-300"
+                }`}
+                value={formData.additionalNotes}
+                onChange={(e) =>
+                  handleInputChange("additionalNotes", e.target.value)
+                }
+                onFocus={() => setFocusedField("notes")}
+                onBlur={() => setFocusedField("")}
               />
             </div>
 
-            {/* CONCERNS FIELD  */}
-
-            <div className="flex flex-col gap-2">
-              <label htmlFor="condition" className="text-gray-700  text-sm">
-                Select your condition / concerns{" "}
-                <span className="text-orange-400">*</span>
-              </label>
-              <select
-                id="condition"
-                required
-                className="border rounded p-2 py-[10px] outline-none bg-transparent border-gray-400  "
-                name="condition"
-                value={concerns}
-                onChange={(e) => setConcerns(e.target.value)}
-              >
-                <option value="">Select your condition</option>
-                <option>Back Pain</option>
-                <option>Neck Pain</option>
-                <option>Knee Injury</option>
-                <option>Sports Injury</option>
-                <option>Post-Surgery Recovery</option>
-                <option>Arthritis</option>
-                <option>Shoulder Pain</option>
-                <option>Headaches</option>
-                <option>Other</option>
-              </select>
-            </div>
+            {/* Submit Button */}
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className={`w-full py-4 px-6 rounded-xl font-semibold text-white transition-all duration-300 transform ${
+                isSubmitting
+                  ? "bg-gray-400 cursor-not-allowed"
+                  : "bg-gradient-to-r from-teal-500 to-blue-600 hover:from-teal-600 hover:to-blue-700 hover:scale-[1.02] hover:shadow-xl hover:shadow-teal-500/25 active:scale-[0.98]"
+              }`}
+            >
+              {isSubmitting ? (
+                <div className="flex items-center justify-center gap-2">
+                  <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                  Processing Your Request...
+                </div>
+              ) : (
+                <div className="flex items-center justify-center gap-2">
+                  <Calendar className="w-5 h-5" />
+                  Confirm Your Appointment
+                </div>
+              )}
+            </button>
           </div>
-
-            
-          <div className="mt-5 flex flex-col gap-2">
-            <label className="text-gray-700 text-sm">
-              {" "}
-              Upload Documents
-            </label>
-           <input type="file" className="" />
-          </div>
-          {/* ADDITIONAL NOTES FIELD  */}
-          <div className="mt-5 flex flex-col gap-2">
-            <label className="text-gray-700 text-sm">
-              {" "}
-              Additional Notes <span>(optional)</span>{" "}
-            </label>
-            <textarea
-              type="text"
-              className="border w-full rounded p-1 outline-none border-gray-400 "
-              placeholder="Enter your additional notes here"
-              value={additionalNotes}
-              onChange={(e) => setAdditionalNotes(e.target.value)}
-            />
-          </div>
-
-
-          {/* SUBMITION FIELD  */}
-
-          <button className="w-full global-bg-color  p-2 rounded-lg  cursor-pointer text-white mt-7">
-            Submit Your Details
-          </button>
-        </form>
+        </div>
       </div>
-    </section>
+
+      {/* Footer */}
+      <div className="text-center mt-8 text-sm text-gray-500">
+        <p>
+          Your information is secure and protected. We respect your privacy.
+        </p>
+      </div>
+    </div>
   );
-};
+}
