@@ -6,6 +6,7 @@ import Footer from "./components/Footer";
 import { AppContextProvider } from "./context/AppContext";
 import { usePathname } from "next/navigation";
 import { WhatsappChatbot } from "./components/WhatsappChatbot";
+import { Toaster } from "react-hot-toast";
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
@@ -45,12 +46,15 @@ export default function RootLayout({
           antialiased
         `}
       >
-        <AppContextProvider>
-          {!(lastSegment === "admin-dashboard") && <Header />}
-          <section>{children}</section>
-          <WhatsappChatbot />
-          {!(lastSegment === "admin-dashboard") && <Footer />}
-        </AppContextProvider>
+        
+          <AppContextProvider>
+            {!(lastSegment === "admin-dashboard") && <Header />}
+            <section>{children}</section>
+            <WhatsappChatbot />
+            {!(lastSegment === "admin-dashboard") && <Footer />}
+          </AppContextProvider>
+        
+        <Toaster />
       </body>
     </html>
   );

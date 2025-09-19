@@ -12,23 +12,27 @@ interface UserInfoDetails {
     patientId: string;
   };
 }
-const state = {
-  email: "sarajohnson@gmail.com",
-  number: "+91 9243553295",
-  dob: "30-08-2012",
-  location: "chennai",
-};
 
-export const UserInfo = ({ stats }: UserInfoDetails) => {
+// Example: DD/MM/YYYY
+export const UserInfo = ({ userDetails }: any) => {
+  const date = new Date(userDetails.bdDate);
+  const formatted = `${date.getDate().toString().padStart(2, "0")}/${(
+    date.getMonth() + 1
+  )
+    .toString()
+    .padStart(2, "0")}/${date.getFullYear()}`;
+
   return (
     <section className="">
       <div className="flex items-center font-sans justify-between">
         <div className="hidden md:flex flex-col gap-2">
-          <h1 className="text-xl font-semibold  capitalize">{stats.patientName}</h1>
+          <h1 className="text-xl font-semibold  capitalize">
+            {userDetails.name}
+          </h1>
           <h1 className="text-gray-600">
             Patient ID:{" "}
             <span className="bg-green-100 text-black rounded-xl py-1  px-2">
-              {stats.patientId}
+              {userDetails.id}
             </span>
           </h1>
         </div>
@@ -36,11 +40,17 @@ export const UserInfo = ({ stats }: UserInfoDetails) => {
           <FiEdit3 />
         </div>
       </div>
-      <div className="grid grid-cols-2 gap-4 mt-5">
-        <PersonalData name={state.number} icon={<MdOutlineMail />} />
-        <PersonalData name={state.email} icon={<MdOutlinePhone />} />
-        <PersonalData name={state.dob} icon={<FaRegCalendarAlt />} />
-        <PersonalData name={state.location} icon={<IoLocationOutline />} />
+      <div className="grid grid-cols-1 md:grid-cols-2  gap-4 mt-5">
+        <PersonalData name={userDetails.email} icon={<MdOutlineMail />} />
+        <PersonalData
+          name={userDetails.phoneNumber}
+          icon={<MdOutlinePhone />}
+        />
+        <PersonalData name={formatted} icon={<FaRegCalendarAlt />} />
+        <PersonalData
+          name={userDetails.location}
+          icon={<IoLocationOutline />}
+        />
       </div>
     </section>
   );

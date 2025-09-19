@@ -3,10 +3,10 @@ import { Calendar, Clock, CheckCircle, XCircle } from "lucide-react";
 
 interface AppointmentStatsProps {
   stats: {
-    total: number,
-    upcoming: number,
-    completed: number,
-    cancelled: number
+    total: number;
+    upcoming: number;
+    completed: number;
+    cancelled: number;
   };
 }
 
@@ -48,7 +48,15 @@ export const Card = ({ stats }: AppointmentStatsProps) => {
           key={index}
           className="flex bg-gradient-to-l from-gray-50 to-white rounded-lg p-4 shadow items-center gap-3"
         >
-          <p className={`${ item.value === stats.completed ? "bg-green-200 global-text-color-teal": item.value === stats.cancelled ? "bg-red-100 text-red-500" : "bg-gray-200 global-text-color-teal"} p-2 rounded-lg `}>
+          <p
+            className={`${
+              item.label === "Completed"
+                ? "bg-green-200 global-text-color-teal"
+                : item.label === "Cancelled"
+                ? "bg-red-100 text-red-500"
+                : "bg-gray-200 global-text-color-teal"
+            } p-2 rounded-lg `}
+          >
             {<item.icon />}{" "}
           </p>
           <div className="">

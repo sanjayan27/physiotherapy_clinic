@@ -29,6 +29,7 @@ export default function Carousel() {
                         idx === current ? "opacity-100" : "opacity-0"
                     }`}
                     draggable={false}
+                    priority
                 />
             ))}
         </div>

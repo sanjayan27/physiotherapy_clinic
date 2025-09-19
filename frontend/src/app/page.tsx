@@ -15,7 +15,6 @@ export default function Home() {
       <StatisticsSection/>
       <ClinicSection />
       <GetInTouch />
-
     </div>
   );
 }

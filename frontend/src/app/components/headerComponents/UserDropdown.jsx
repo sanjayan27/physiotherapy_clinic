@@ -1,14 +1,19 @@
 // User dropdown component
+import { AppContext } from "@/app/context/AppContext";
 import Link from "next/link";
+import { useContext } from "react";
 import { FaUser } from "react-icons/fa";
+import { LogOut, HeartPlus } from "lucide-react";
 import { RiArrowDropDownLine } from "react-icons/ri";
 const UserDropdown = ({
   isMobile = false,
   handleUserAction,
   dropdownRef,
   userDetails,
-}) => (
-  <div
+  handleLogout,
+}) => {
+  const {role} = useContext(AppContext);
+  return (<div
     className={`${isMobile ? "" : "relative"}`}
     ref={!isMobile ? dropdownRef : undefined}
   >
@@ -46,23 +51,27 @@ const UserDropdown = ({
           </button>
         </div>
         <div className="py-1">
+          {(role === "admin") | (role=== "superadmin" )? (
+          <Link href="/admin-dashboard"  className="block w-full text-left px-4 py-2 text-gray-600 hover:bg-teal-50 hover:text-green-600 transition-colors duration-150 cursor-pointer">  Admin Page</Link>
+        ) : (
           <Link
             href="/user-details"
-            className="block w-full text-left px-4 py-2 text-gray-600 hover:bg-teal-50 hover:text-teal-700 transition-colors duration-150"
-            onClick={() => handleUserAction("close")}
+            className="block w-full text-left px-4 py-2 text-gray-600 hover:bg-teal-50 hover:text-green-600 transition-colors duration-150 cursor-pointer"
+            onClick={isMobile ? closeMenu : undefined}
           >
             Your Details
           </Link>
+        )}
           <button
             className="block w-full text-left px-4 py-2 text-gray-600 hover:bg-teal-50 hover:text-red-600 transition-colors duration-150 cursor-pointer"
-            onClick={() => handleUserAction("logout")}
+            onClick={() => handleLogout()}
           >
             Log Out
           </button>
         </div>
       </div>
     </div>
-  </div>
-);
+  </div>)
+};
 
 export default UserDropdown;

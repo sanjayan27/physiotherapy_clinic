@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import { useContext, useState, useEffect, useRef, useCallback } from "react";
+import { useRouter } from "next/navigation";
 import { BsCalendar4Event } from "react-icons/bs";
 import { AppContext } from "@/app/context/AppContext";
 
@@ -10,6 +11,8 @@ import FunctioningLinks from "./headerComponents/FunctioningLinks";
 
 import HandleMobileView from "./headerComponents/HandleMobileView";
 import { House, TicketPlus, BookUser, ListCollapse } from "lucide-react";
+import summaryApi from "../common/summary.api";
+import Axios from "../utils/Axios";
 
 // Constants moved outside component to prevent re-creation
 const NAVIGATION_LINKS = [
@@ -31,8 +34,9 @@ const NAVIGATION_LINKS = [
 export const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [userDetails, setUserDetails] = useState(false);
-  const { isLogin } = useContext(AppContext);
+  const { isLogin, setIsLogin } = useContext(AppContext);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
 
   // Memoized handlers to prevent unnecessary re-renders
   const toggleMenu = useCallback(() => {
@@ -43,24 +47,37 @@ export const Header = () => {
     setMenuOpen(false);
   }, []);
 
-  const handleUserAction = useCallback(
-    (action: "open" | "close" | "logout") => {
-      switch (action) {
-        case "open":
-          setUserDetails(true);
-          break;
-        case "close":
-          setUserDetails(false);
-          break;
-        case "logout":
-          localStorage.removeItem("isLogin");
-          window.location.reload();
-          break;
-      }
-    },
-    []
-  );
-
+  const handleUserAction = useCallback((action: "open" | "close") => {
+    switch (action) {
+      case "open":
+        setUserDetails(true);
+        break;
+      case "close":
+        setUserDetails(false);
+        break;
+    }
+  }, []);
+  const handleLogout = async () => {
+    try {
+      const response = await Axios({
+        url: summaryApi.logout.endpoint,
+        method: summaryApi.logout.method,
+        withCredentials: true,
+      });
+      console.log("Logout response", response);
+    } catch (error) {
+      // Log the error, but proceed with client-side logout anyway
+      console.error(
+        "Logout failed on server, but proceeding with client-side logout:",
+        error
+      );
+    } finally {
+      setIsLogin(false);
+      localStorage.removeItem("isLogin");
+      localStorage.removeItem("user");
+      router.push("/login");
+    }
+  };
   // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -131,6 +148,7 @@ export const Header = () => {
             {isLogin ? (
               <div className="ml-4 ">
                 <UserDropdown
+                  handleLogout={handleLogout}
                   handleUserAction={handleUserAction}
                   dropdownRef={dropdownRef}
                   userDetails={userDetails}
@@ -190,7 +208,12 @@ export const Header = () => {
               <div className="">
                 <NavigationLinks isMobile />
               </div>
-              <FunctioningLinks handleUserAction={handleUserAction}  closeMenu={closeMenu} isMobile/>
+              <FunctioningLinks
+                handleLogout={handleLogout}
+                handleUserAction={handleUserAction}
+                closeMenu={closeMenu}
+                isMobile
+              />
             </div>
             {!isLogin && (
               <div className="p-4 border-t border-gray-100 ">

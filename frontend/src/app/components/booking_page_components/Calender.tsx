@@ -10,15 +10,19 @@ export default function Calender() {
 
   const { setDateClicked, setSelectedDate, selectedDate } =
     useContext(AppContext);
-  console.log(selectedDate);
 
   // const fetchDateForTimeslots = async()=>{
   //   const data = await fetch.get(`/api/data/${selected}`,)
   // }
+  const dateToFetch = selected ? new Date(selected) : new Date();
+  const year = dateToFetch.getFullYear();
+  const month = String(dateToFetch.getMonth() + 1).padStart(2, "0");
+  const day = String(dateToFetch.getDate()).padStart(2, "0");
+  const formattedDate = `${year}-${month}-${day}`;
 
   useEffect(() => {
     if (selected) {
-      setSelectedDate(selected.toLocaleDateString());
+      setSelectedDate(formattedDate);
       setDateClicked(true);
     }
   }, [selected]);

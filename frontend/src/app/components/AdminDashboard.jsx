@@ -7,7 +7,9 @@ import { CalenderSection } from "./Admin_dashboard/CalenderSection";
 import { TodayAppointmentPage } from "./Admin_dashboard/TodayAppointmentPage";
 import { PatientInformations } from "./Admin_dashboard/PatientInformations";
 import { WhatsappMessageInbox } from "./Admin_dashboard/WhatsappMessageInbox";
-
+import { Home } from "lucide-react";
+import { IoMdHome } from "react-icons/io";
+import Link from "next/link";
 // Simple icon components to replace lucide-react
 
 const MessageSquare = () => <span>💬</span>;
@@ -18,21 +20,6 @@ const AdminDashboard = () => {
   const [showBilling, setShowBilling] = useState(false);
   const [selectedPatient, setSelectedPatient] = useState(null);
   const [currentDate, setCurrentDate] = useState("");
-
-  // Sample data - in real app, this would come from your backend
-  const [availableSlots, setAvailableSlots] = useState({
-    "2025-08-04": ["09:00", "10:00", "11:00", "14:00", "15:00", "16:00"],
-    "2025-08-05": ["09:00", "10:00", "11:00", "14:00", "15:00"],
-    "2025-08-06": [
-      "09:00",
-      "10:00",
-      "11:00",
-      "14:00",
-      "15:00",
-      "16:00",
-      "17:00",
-    ],
-  });
 
   const [todaysAppointments, setTodaysAppointments] = useState([
     {
@@ -144,20 +131,6 @@ const AdminDashboard = () => {
     return months;
   };
 
-  const addTimeSlot = (date, time) => {
-    setAvailableSlots((prev) => ({
-      ...prev,
-      [date]: [...(prev[date] || []), time].sort(),
-    }));
-  };
-
-  const removeTimeSlot = (date, timeToRemove) => {
-    setAvailableSlots((prev) => ({
-      ...prev,
-      [date]: (prev[date] || []).filter((time) => time !== timeToRemove),
-    }));
-  };
-
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
@@ -174,8 +147,11 @@ const AdminDashboard = () => {
                   {whatsappMessages.filter((m) => m.status === "unread").length}
                 </span>
               </div>
-              <div className="text-sm text-black">Today: {currentDate}</div>
+              <div className="text-sm text-black">Today: {currentDate}</div> <div>
+              <Link href="/" className=""><IoMdHome /></Link>
             </div>
+            </div>
+           
           </div>
         </div>
       </header>
@@ -188,11 +164,7 @@ const AdminDashboard = () => {
           {/* calender & slots */}
           <CalenderSection
             activeTab={activeTab}
-            availableSlots={availableSlots}
             generateNextSixMonths={generateNextSixMonths}
-            setAvailableSlots={setAvailableSlots}
-            removeTimeSlot={removeTimeSlot}
-            addTimeSlot={addTimeSlot}
           />
           {/* todays appointment section  */}
           <TodayAppointmentPage
