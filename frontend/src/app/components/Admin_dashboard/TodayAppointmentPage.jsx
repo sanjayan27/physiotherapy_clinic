@@ -1,13 +1,13 @@
 import summaryApi from "@/app/common/summary.api";
+import { AppContext } from "@/app/context/AppContext";
 import Axios from "@/app/utils/Axios";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { FaCheckToSlot } from "react-icons/fa6";
 export const TodayAppointmentPage = ({
   activeTab,
   getStatusColor,
   openBilling,
-  updateAppointmentStatus,
 }) => {
   const [todaysAppointments, setTodaysAppointments] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -22,6 +22,7 @@ export const TodayAppointmentPage = ({
     const day = String(date.getDate()).padStart(2, "0");
     return `${year}-${month}-${day}`;
   });
+
 
   const Clock = () => <span>⏰</span>;
   const Phone = () => <span>📞</span>;

@@ -50,15 +50,19 @@ export default function MobileLoginForm() {
     setIsLoading(true);
     try {
       const payload =
-        loginMethod === "email" ? { email : email } : { phoneNumber: `+91${phoneNumber}` };
+        loginMethod === "email" ? { email : email } : { phoneNumber: `${phoneNumber}` };
         console.log(payload)
-      await Axios({
+      const response = await Axios({
         url: summaryApi.request_otp.endpoint,
         method: summaryApi.request_otp.method,
         data: payload,
       });
-      setIsOtpSent(true);
-      alert(`OTP sent to your ${loginMethod}!`);  
+      console.log('response',response)
+      if(response?.data){
+        setIsOtpSent(true);
+        alert(`OTP sent to your ${loginMethod}!`);  
+      }
+        
     } catch (err) {
       alert(
         err.response?.data?.message || "Failed to send OTP. Please try again."
@@ -149,7 +153,7 @@ export default function MobileLoginForm() {
                   value={phoneNumber}
                   onChange={(e) => setPhoneNumber(e.target.value)}
                   className="w-full px-4 py-3 pr-28 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
-                  maxLength="10"
+                  maxLength="13"
                   required
                 />
                 <button

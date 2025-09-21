@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import BillingInterface from "@/app/components/Admin_dashboard/BillingInterface";
 import { SideBar } from "./Admin_dashboard/SideBar";
 import { CalenderSection } from "./Admin_dashboard/CalenderSection";
@@ -20,7 +20,6 @@ const AdminDashboard = () => {
   const [showBilling, setShowBilling] = useState(false);
   const [selectedPatient, setSelectedPatient] = useState(null);
   const [currentDate, setCurrentDate] = useState("");
-
   const [todaysAppointments, setTodaysAppointments] = useState([
     {
       id: 1,
@@ -130,7 +129,6 @@ const AdminDashboard = () => {
     }
     return months;
   };
-
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
@@ -193,6 +191,7 @@ const AdminDashboard = () => {
             <BillingInterface
               setShowBilling={setShowBilling}
               showBilling={showBilling}
+              selectedPatient = {selectedPatient}
             />
           </div>
         </div>

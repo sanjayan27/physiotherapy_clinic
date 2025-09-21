@@ -1,4 +1,3 @@
-import UserDetails from "@/app/components/UserdetailsComponent/UserProfileCard";
 import { AppointmentStats } from "../components/UserdetailsComponent/AppointmentStats";
 import { UserDetailHeader } from "../components/UserdetailsComponent/UserDetailHeader";
 import UserProfileCard from "@/app/components/UserdetailsComponent/UserProfileCard";
@@ -13,12 +12,14 @@ export default async function page() {
     if (!token) {
       redirect("/login");
     }
+
     try {
-      // verify & decode (replace "your-secret-key" with the same one used in NestJS)
-      const decoded: any = jwt.verify(token.value, process.env.JWT_SECRET!);
-      console.log("decoded", decoded);
+      const decoded:any = jwt.decode(token.value);
+      // verify & decode (replace "your-secret-key"` with the same one used in NestJS)
+      // const decoded: any = jwt.verify(token.value, process.env.JWT_SECRET!);
+      // console.log("decoded", decoded);
       // Check role
-      if (decoded.role !== "admin" && decoded.role !== "superadmin" && decoded.role !== 'user' ) {
+      if (decoded?.role !== "admin" && decoded.role !== "superadmin" && decoded.role !== 'user' ) {
         redirect("/unauthorized"); // you can create a custom 403 page
       }
   return (

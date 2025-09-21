@@ -4,7 +4,9 @@ import Link from "next/link";
 import { useState } from "react";
 import Axios from "../../utils/Axios";
 import summaryApi from "../../common/summary.api";
-
+import toast from "react-hot-toast";
+import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 export default function MobileRegisterForm() {
   const [mobileNumber, setMobileNumber] = useState("");
   const [otp, setOtp] = useState("");
@@ -14,7 +16,7 @@ export default function MobileRegisterForm() {
   const [email, setEmail] = useState("");
   const [bdDate, setBdDate] = useState("");
   const [location, setLocation] = useState("");
-
+  const router = useRouter()
   // Send OTP to email
   // const handleSendOtp = async () => {
   //   if (!email.trim() || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
@@ -41,11 +43,15 @@ export default function MobileRegisterForm() {
   const handleRegister = async () => {
     // Validate all fields
     if (!name.trim()) {
-      alert("Please enter your name");
+      toast.error("Please enter your name");
       return;
     }
     if (!email.trim() || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
-      alert("Please enter a valid email address");
+      toast.error("Please enter a valid email address");
+      return;
+    }
+    if(!mobileNumber.trim() || !bdDate || !location){
+      toast.error("Please fill all the fields");
       return;
     }
     // if (!isOtpSent) {
@@ -69,13 +75,21 @@ export default function MobileRegisterForm() {
           // code: otp,
         },
       });
-      if (response.data && response.data.success) {
-        alert("Registration successful!");
+      console.log('response',response)
+      if (response.data) {
+        // alert("Registration successful!");
+        toast.success("Registration successful!")
+        setEmail("")
+        setName("")
+        setMobileNumber("")
+        setBdDate("")
+        setLocation("")
+        router.push('/login')
       } else {
-        alert(response.data?.message || "Registration failed");
+        toast.error(response.data?.message || "Registration failed");
       }
     } catch (error) {
-      alert(error.response?.data?.message || "Registration failed");
+      toast.error(error.response?.data?.message || "Registration failed");
     }
   };
 
@@ -137,7 +151,7 @@ export default function MobileRegisterForm() {
               value={mobileNumber}
               onChange={(e) => setMobileNumber(e.target.value)}
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
-              maxLength="10"
+              
               required
             />
           </div>
@@ -158,7 +172,7 @@ export default function MobileRegisterForm() {
               placeholder="Location (eg:Chennai,Trichy) *"
               value={location}
               onChange={(e) => setLocation(e.target.value)}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all capitalize"
               maxLength="10"
               required
             />
@@ -187,7 +201,7 @@ export default function MobileRegisterForm() {
           <button
             type="button"
             onClick={handleRegister}
-            className="w-full bg-gray-900 text-white py-3 px-4 rounded-lg font-medium hover:bg-gray-800 active:bg-black transition-all transform hover:scale-[0.99] active:scale-[0.97]"
+            className="w-full bg-gray-900 text-white py-3 px-4 rounded-lg font-medium hover:bg-gray-800 active:bg-black transition-all transform hover:scale-[0.99] active:scale-[0.97] "
           >
             Register
           </button>

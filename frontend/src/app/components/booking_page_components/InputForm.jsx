@@ -18,6 +18,7 @@ import {
   AxiosToastError,
 } from "@/app/utils/AxiosToastSended";
 import toast from "react-hot-toast";
+import { redirect } from "next/navigation";
 
 const initialFormData = {
   fullName: "",
@@ -101,7 +102,6 @@ export default function PatientInformationForm({
         data: payload,
         withCredentials: true,
       });
-      console.log("res",response)
       if (response.data.success) {
         alert("Successfully booked your appointment")// Use the helper function
         setFormData(initialFormData);
@@ -222,9 +222,10 @@ export default function PatientInformationForm({
                 </label>
                 <div className="relative">
                   <input
-                    type="number"
+                    type="tel"
                     required
-                    placeholder="+91 00000 00000"
+                    placeholder="00000 00000"
+                    maxLength={10}
                     className={`w-full px-4 py-3 rounded-xl border-2 transition-all duration-300 bg-white/50 backdrop-blur-sm ${
                       focusedField === "phone"
                         ? "border-teal-500 shadow-lg shadow-teal-500/20"

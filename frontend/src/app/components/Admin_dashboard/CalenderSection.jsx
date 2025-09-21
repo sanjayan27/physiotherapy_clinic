@@ -403,7 +403,7 @@ export const CalenderSection = ({ activeTab }) => {
     <div className=" bg-slate-50 p-6">
       {activeTab === "calendar" && (
         <div className="max-w-7xl mx-auto">
-          <div className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 rounded-2xl p-6 text-white shadow-lg mb-8">
+          <div className="bg-gradient-to-r from-teal-600 via-green-600 to-black rounded-2xl p-6 text-white shadow-lg mb-8">
             <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
               <div>
                 <h1 className="text-3xl font-bold flex items-center gap-3">

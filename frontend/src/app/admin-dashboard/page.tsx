@@ -6,27 +6,22 @@ import jwt from "jsonwebtoken";
 async function page() {
   const cookieStore = await cookies();
   const token = cookieStore.get("auth_token");
-  console.log("token", token);
   if (!token) {
     redirect("/login");
   }
-  try {
-    // verify & decode (replace "your-secret-key" with the same one used in NestJS)
-    const decoded: any = jwt.verify(token.value, process.env.JWT_SECRET!);
-    console.log("decoded", decoded);
-    // Check role
-    if (decoded.role !== "admin" && decoded.role !== "superadmin") {
-      redirect("/unauthorized"); // you can create a custom 403 page
-    }
-    if(decoded.role === 'user'){
-      redirect('/unauthorized')
-    }
-
-    return (
-      <section>
-        <AdminDashboard />
-      </section>
-    );
+   try {
+        // verify & decode (replace "your-secret-key"` with the same one used in NestJS)
+        const decoded:any = jwt.decode(token.value);
+        // Check role
+        if (decoded.role !== "admin" && decoded.role !== "superadmin" ) {
+          redirect("/unauthorized"); // you can create a custom 403 page
+        }
+      return (
+        <section>
+          <AdminDashboard />
+        </section>
+      );
+    
   } catch (err) {
     console.error("Invalid token:", err);
     redirect("/login");

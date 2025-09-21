@@ -46,9 +46,9 @@ export const AppointmentStats = () => {
         method: summaryApi.getAppointmentData.method,
         withCredentials: true,
       });
-      if (response.data) {
+      if (response?.data) {
         let fetchedAppointments = response?.data;
-        
+        console.log('fetc',fetchedAppointments)
         // Ensure it's always an array
         if (!Array?.isArray(fetchedAppointments)) {
           fetchedAppointments = [fetchedAppointments];

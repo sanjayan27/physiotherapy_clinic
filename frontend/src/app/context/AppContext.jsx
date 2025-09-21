@@ -48,7 +48,8 @@ export const AppContextProvider = (props) => {
     setUserId,
     userId,
     role,
-    setSelectedSlots
+    setSelectedSlots,  
+    
   };
   return (
     <AppContext.Provider value={value}>{props.children}</AppContext.Provider>

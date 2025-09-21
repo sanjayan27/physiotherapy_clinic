@@ -64,7 +64,20 @@ const summaryApi = {
   updatePatientPayment: {
     endpoint: "/patient-details/admin",
     method: "patch",
-  }
+  },
+  verifyJwtToken: {
+    endpoint: "/auth/verify-token",
+    method: "get",
+  },
+  updateUserDetails:{
+    endpoint: "/user",
+    method: "patch",
+   },
+   cancelBooking:{
+    endpoint: "/patient-details/cancel/",
+    method: "delete"
+   }
+
 };
 
 export default summaryApi;

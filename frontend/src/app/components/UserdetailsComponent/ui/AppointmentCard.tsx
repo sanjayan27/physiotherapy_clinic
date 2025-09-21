@@ -1,3 +1,5 @@
+import summaryApi from "@/app/common/summary.api";
+import Axios from "@/app/utils/Axios";
 import {
   CalendarIcon,
   ClockIcon,
@@ -8,6 +10,7 @@ import {
   Edit,
 } from "lucide-react";
 import Link from "next/link";
+import toast from "react-hot-toast";
 interface Appointment {
   id: string;
   type: string;
@@ -22,7 +25,23 @@ interface Appointment {
 
 export const AppointmentCard: React.FC<{ appointment: Appointment }> = ({
   appointment,
-}) => (
+}) => {
+  const handleCancel = async (id : string) => {
+    try{
+      const response = await Axios({
+        url: summaryApi.cancelBooking.endpoint + id,
+        method: summaryApi.cancelBooking.method
+      }) 
+
+     if(response){
+      toast.success("Booking Cancelled")
+      window.location.reload()
+     }
+    }catch(error : any){
+      toast.error(error.message)
+    }
+  }
+  return (
   <div className="bg-white rounded-lg border border-gray-200 p-6 mb-4 shadow-sm">
     <div className=" flex flex-col md:flex-row items-start justify-between">
       <div className="flex-1">
@@ -110,11 +129,12 @@ export const AppointmentCard: React.FC<{ appointment: Appointment }> = ({
         ) : appointment.status === "requested" ? (
           <div></div>
         ) : (
-          <button className="px-4 py-2 border border-teal-600 global-text-color-teal rounded-lg hover:bg-blue-50 transition-colors">
-            Reshcdule
+          <button className="px-4 py-2 border border-teal-600 global-text-color-teal rounded-lg hover:bg-blue-50 transition-colors" onClick={()=>handleCancel(appointment.id)}>
+            Cancel
           </button>
         )}
       </div>
     </div>
   </div>
 );
+}
