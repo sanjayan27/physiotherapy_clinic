@@ -1,12 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { AppContext } from "@/app/context/AppContext";
 import Axios from "@/app/utils/Axios";
 import summaryApi from "@/app/common/summary.api";
 import { AxiosToastSuccess } from "@/app/utils/AxiosToastSended";
+import toast from "react-hot-toast";
 export default function MobileLoginForm() {
   const [email, setEmail] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -16,7 +17,7 @@ export default function MobileLoginForm() {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const { setIsLogin } = useContext(AppContext);
-
+console.log("setIsLogin",setIsLogin)
   const toggleLoginMethod = () => {
     setLoginMethod((prev) => (prev === "phone" ? "email" : "phone"));
     // Reset states on method switch
@@ -60,7 +61,7 @@ export default function MobileLoginForm() {
       console.log('response',response)
       if(response?.data){
         setIsOtpSent(true);
-        alert(`OTP sent to your ${loginMethod}!`);  
+        toast.success(`OTP sent to your ${loginMethod}!`);  
       }
         
     } catch (err) {
@@ -76,23 +77,7 @@ export default function MobileLoginForm() {
     if (!validateIdentifier()) return;
 
     if (!otp) {
-      alert("Please enter your OTP");
-      return;
-    }
-
-    // Admin shortcut
-    if (
-      loginMethod === "email" &&
-      email === "admin@admin.com" &&
-      otp === "admin123"
-    ) {
-      setIsLogin(true);
-      localStorage.setItem("isLogin", "true");
-      localStorage.setItem(
-        "user",
-        JSON.stringify({ role: "superadmin", email: "admin@admin.com" })
-      );
-      router.push("/admin-dashboard");
+      toast.error("Please enter your OTP");
       return;
     }
 
@@ -108,24 +93,24 @@ export default function MobileLoginForm() {
         withCredentials: true,
       });
       if (response.data && response.data.success) {
-        console.log(response.data.message)
         // AxiosToastSuccess(response.data.message)
         setIsLogin(true);
         localStorage.setItem("isLogin", "true");
         // Store user info from the response payload, not the cookie
         if (response.data.data.user) {
           localStorage.setItem("user", JSON.stringify(response.data.data.user));
-        }console.log('ss',response.data.message)
+          toast.success("Login Successful")
+        }
         if (response.data.data.user.role === "superadmin") {
           router.push("/admin-dashboard");
         } else if (response.data.data.user.role === "user") {
           router.push("/user-details");
         }
       } else {
-        alert(response.data?.message || "Login failed. Please check your OTP.");
+        toast.error(response.data?.message || "Login failed. Please check your OTP.");
       }
     } catch (error) {
-      alert(
+      toast.error(
         error.response?.data?.message ||
           error.message ||
           "Login failed. Please try again."
@@ -133,6 +118,7 @@ export default function MobileLoginForm() {
     }
   };
 
+  
   return (
     <div className="min-h-[80vh]   bg-gray-50 flex items-center justify-center p-4">
       <div className="w-full max-w-md bg-white rounded-lg shadow-lg p-8">

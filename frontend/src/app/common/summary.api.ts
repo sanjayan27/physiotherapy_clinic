@@ -1,4 +1,4 @@
-export const baseUrl = "http://localhost:3001/";
+export const baseUrl = "https://clinic-appointment-booking-backend.onrender.com/";
 
 const summaryApi = {
   register: {

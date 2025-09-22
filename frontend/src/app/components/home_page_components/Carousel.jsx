@@ -2,11 +2,10 @@ import React, { useState, useEffect } from "react";
 import img1 from "../../assets/clinic-1.webp";
 import img2 from "../../assets/clinic-2.jpg";
 import img3 from "../../assets/clinic-3.jpeg";
-import img4 from "../../assets/clinic-4.avif";
 import img5 from "../../assets/clinic-5.jpg";
 import Image from 'next/image'
 
-const images = [img1, img2,img3, img4, img5];
+const images = [img1, img2,img3, img5];
 
 export default function Carousel() {
     const [current, setCurrent] = useState(0);

@@ -6,19 +6,17 @@ variables:
   DOCKER_DRIVER: overlay2
   DOCKER_TLS_CERTDIR: ""
 
-before_script:
-  - echo $CI_REGISTRY_PASSWORD | docker login -u $CI_REGISTRY_USER $CI_REGISTRY --password-stdin
-
 build:
   stage: build
   image: docker:latest
   services:
     - docker:dind
   script:
+    - echo $CI_REGISTRY_PASSWORD | docker login -u $CI_REGISTRY_USER $CI_REGISTRY --password-stdin
     - docker build -t $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA .
     - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
   only:
-    - sanjayan   # ✅ will only trigger on your branch
+    - sanjayan
 
 deploy:
   stage: deploy
@@ -27,4 +25,4 @@ deploy:
     - echo "Triggering Render Deploy..."
     - curl -X POST "https://api.render.com/deploy/$RENDER_SERVICE_ID?key=$RENDER_API_KEY"
   only:
-    - sanjayan   # ✅ same here
+    - sanjayan
