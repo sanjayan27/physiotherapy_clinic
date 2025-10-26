@@ -22,6 +22,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/context/AppContext.jsx", "src/app/components/Admin_dashboard/SideBar.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/context/AppContext.jsx", "src/app/components/Admin_dashboard/SideBar.tsx", "src/app/components/Admin_dashboard/slotComponents/InlineSlotCreator.tsx"],
   "exclude": ["node_modules"]
 }

@@ -13,6 +13,8 @@ import HandleMobileView from "./headerComponents/HandleMobileView";
 import { House, TicketPlus, BookUser, ListCollapse } from "lucide-react";
 import summaryApi from "../common/summary.api";
 import Axios from "../utils/Axios";
+import toast from "react-hot-toast";
+import { logout } from "../services/authentication.service";
 
 // Constants moved outside component to prevent re-creation
 const NAVIGATION_LINKS = [
@@ -34,7 +36,7 @@ const NAVIGATION_LINKS = [
 export const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [userDetails, setUserDetails] = useState(false);
-  const { isLogin, setIsLogin } = useContext(AppContext);
+  const { isLogin, setIsLogin } = useContext(AppContext)!;
   const dropdownRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
 
@@ -59,17 +61,13 @@ export const Header = () => {
   }, []);
   const handleLogout = async () => {
     try {
-      const response = await Axios({
-        url: summaryApi.logout.endpoint,
-        method: summaryApi.logout.method,
-        withCredentials: true,
-      });
-      console.log("Logout response", response);
+      const response = await logout()
+      toast.success(response.message || 'Logout successfully');
     } catch (error) {
       // Log the error, but proceed with client-side logout anyway
-      console.error(
+      toast.error(
         "Logout failed on server, but proceeding with client-side logout:",
-        error
+        
       );
     } finally {
       setIsLogin(false);
@@ -117,8 +115,8 @@ export const Header = () => {
           href={link.href}
           className={
             isMobile
-              ? " py-4 w-full px-2 rounded text-gray-700 hover:text-teal-700 hover:bg-teal-50 border-b border-gray-100 transition-colors duration-150 flex flex-row items-center gap-1 "
-              : "text-gray-600 text-lg hover:text-teal-700 transition-colors duration-200 px-3 py-2 rounded-md hover:bg-teal-50 flex items-center gap-1"
+              ? " py-4 w-full px-2 rounded text-gray-700 global-hover-text-teal global-hover-bg-mint border-b border-gray-100 transition-colors duration-150 flex flex-row items-center gap-1 "
+              : "text-gray-600 text-lg global-hover-text-teal transition-colors duration-200 px-3 py-2 rounded-md global-hover-bg-mint flex items-center gap-1"
           }
           onClick={isMobile ? closeMenu : undefined}
         >
@@ -135,8 +133,8 @@ export const Header = () => {
         <div className="flex justify-between items-center py-4">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 group">
-            <BsCalendar4Event className="w-7 h-7 global-text-color-teal transition-transform duration-200 group-hover:scale-110" />
-            <span className="font-extrabold text-2xl global-text-color-teal tracking-wide">
+<BsCalendar4Event className="w-7 h-7 global-text-color-navy transition-transform duration-200 group-hover:scale-110" />
+            <span className="font-extrabold text-2xl global-text-color-navy tracking-wide">
               Clinic Name
             </span>
           </Link>
@@ -157,7 +155,7 @@ export const Header = () => {
             ) : (
               <Link
                 href="/login"
-                className="ml-4 px-6 py-2 rounded-full text-white bg-gradient-to-r from-teal-600 to-teal-500 hover:from-teal-700 hover:to-teal-600 shadow-md hover:shadow-lg transition-all duration-200 transform hover:scale-105"
+                className="ml-4 px-6 py-2 rounded-full text-white btn-brand-gradient shadow-md hover:shadow-lg transition-all duration-200 transform hover:scale-105"
               >
                 Login
               </Link>
@@ -173,17 +171,17 @@ export const Header = () => {
           >
             <div className="w-6 h-6 flex flex-col justify-center items-center">
               <span
-                className={`block h-0.5 w-6 bg-teal-700 rounded transition-all duration-300 ${
+                className={`block h-0.5 w-6 bg-brand-bar rounded transition-all duration-300 ${
                   menuOpen ? "rotate-45 translate-y-0.5" : "mb-1"
                 }`}
               />
               <span
-                className={`block h-0.5 w-6 bg-teal-700 rounded transition-all duration-300 ${
+                className={`block h-0.5 w-6 bg-brand-bar rounded transition-all duration-300 ${
                   menuOpen ? "opacity-0" : "mb-1"
                 }`}
               />
               <span
-                className={`block h-0.5 w-6 bg-teal-700 rounded transition-all duration-300 ${
+                className={`block h-0.5 w-6 bg-brand-bar rounded transition-all duration-300 ${
                   menuOpen ? "-rotate-45 -translate-y-0.5" : ""
                 }`}
               />
@@ -219,7 +217,7 @@ export const Header = () => {
               <div className="p-4 border-t border-gray-100 ">
                 <Link
                   href="/login"
-                  className="block w-full text-center px-6 py-3 rounded-full text-white bg-gradient-to-r from-teal-600 to-teal-500 hover:from-teal-700 hover:to-teal-600 shadow-md transition-all duration-200"
+                  className="block w-full text-center px-6 py-3 rounded-full text-white btn-brand-gradient shadow-md transition-all duration-200"
                   onClick={closeMenu}
                 >
                   Login

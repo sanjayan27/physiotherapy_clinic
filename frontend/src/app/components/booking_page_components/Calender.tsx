@@ -9,7 +9,7 @@ export default function Calender() {
   const [selected, setSelected] = useState<Date>();
 
   const { setDateClicked, setSelectedDate, selectedDate } =
-    useContext(AppContext);
+    useContext(AppContext)!;
 
   // const fetchDateForTimeslots = async()=>{
   //   const data = await fetch.get(`/api/data/${selected}`,)
@@ -28,7 +28,7 @@ export default function Calender() {
   }, [selected]);
 
   return (
-    <section className="  p-3 rounded-xl shadow-xl bg-teal-50">
+    <section className="  p-3 rounded-xl shadow-xl bg-surface-cloud">
       <DayPicker
         animate
         mode="single"
@@ -40,7 +40,7 @@ export default function Calender() {
         }}
         classNames={{
           nav_button:
-            "text-teal-500 hover:text-teal-700 text-lg p-2 rounded-full hover:bg-teal-100",
+            "global-text-color-teal global-hover-text-teal text-lg p-2 rounded-full global-hover-bg-mint",
         }}
       />
     </section>

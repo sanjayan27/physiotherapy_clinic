@@ -6,13 +6,14 @@ import { AppContext } from "@/app/context/AppContext";
 import { DenotingUserStyle } from "./DenotingUserStyle";
 import Axios from "@/app/utils/Axios";
 import summaryApi from "@/app/common/summary.api";
+import { getSlotForSingleDate } from "@/app/services/slotApi.service";
 
 export const TimeSlots = () => {
   const [singleDaySlots, setSingleDaySlots] = useState<object[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   const { dateClicked, selectedDate, handleScrollToForm ,selectedSlots,setSelectedSlots} =
-    useContext(AppContext);
+    useContext(AppContext)!;
 
   const fetchSlotsByDate = async (date?: string) => {
     setIsLoading(true);
@@ -20,14 +21,10 @@ export const TimeSlots = () => {
       return 'Choose the <date></date>'
     }
     try {
-      const response = await Axios({
-        url: summaryApi.getSlotForSingleDate.endpoint,
-        method: summaryApi.getSlotForSingleDate.method,
-        params: { date }, // Pass date as a query parameter, e.g., ?date=YYYY-MM-DD
-      });
+      const response = await getSlotForSingleDate(date)
       // Assuming the API returns an object like { success: true, data: [...] }
-      if (response.data && Array.isArray(response.data)) {
-        setSingleDaySlots(response?.data);
+      if (response && Array.isArray(response)) {
+        setSingleDaySlots(response);
       } else {
         setSingleDaySlots([]);
       }
@@ -41,18 +38,18 @@ export const TimeSlots = () => {
 
   useEffect(() => {
 
-    fetchSlotsByDate(selectedDate);
+    fetchSlotsByDate(selectedDate || undefined);
   }, [selectedDate]);
 
  
 
   return dateClicked === false ? (
     <section className="w-full flex font-sans justify-center items-center mb-8">
-      <div className=" w-[80%] sm:w-[75%] bg-gradient-to-t from-teal-100 to-white p-3 rounded-2xl h-70 shadow-xl">
+      <div className=" w-[80%] sm:w-[75%] bg-brand-soft p-3 rounded-2xl h-70 shadow-xl">
         <p className="flex items-center text-2xl gap-1">
           <IoIosTimer className="font-bold" /> Available Time Slots
         </p>
-        <div className="capitalize text-gray-600 mt-5 p-2 max-w-80 flex flex-col gap-5">
+        <div className="capitalize text-body mt-5 p-2 max-w-80 flex flex-col gap-5">
           <p>please select a date to view available timeslots</p>
           <div className="flex flex-row gap-5">
             <DenotingUserStyle color="bg-green-500" text="available" />
@@ -63,17 +60,17 @@ export const TimeSlots = () => {
     </section>
   ) : (
     <section className="w-full flex mb-8 font-sans justify-center items-center  ">
-      <div className=" w-[70%] bg-gradient-to-t from-teal-100 to-white p-3 shadow-xl rounded-2xl">
+      <div className=" w-[70%] bg-brand-soft p-3 shadow-xl rounded-2xl">
         <div>
           <p className="flex items-center text-2xl gap-1">
             <IoIosTimer className="font-bold" /> Available Time Slots
           </p>
-          <p className="text-gray-500 text-sm mt-3">
+          <p className="text-body text-sm mt-3">
             Selected Date: {selectedDate}
           </p>
           <section className="grid grid-cols-3 mt-5 gap-3">
             {isLoading ? (
-              <p className="col-span-3 text-center text-gray-500">
+              <p className="col-span-3 text-center text-body">
                 Loading slots...
               </p>
             ) : singleDaySlots.length > 0 ? (
@@ -86,7 +83,7 @@ export const TimeSlots = () => {
                     className={`shadow-2xl text-center rounded py-2 ${
                       isBooked
                         ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-                        : "bg-teal-700 cursor-pointer text-white"
+                : "global-bg-color cursor-pointer text-white"
                     }`}
                     onClick={() => !isBooked && handleScrollToForm(slot.slot) && setSelectedSlots(slot.slot)}
                     disabled={isBooked}

@@ -7,6 +7,7 @@ import { AppContext } from "@/app/context/AppContext";
 import Axios from "@/app/utils/Axios";
 import summaryApi from "@/app/common/summary.api";
 import { isAxiosError } from "axios";
+import { getAppointmentData } from "@/app/services/patientAppointmentBooking.service";
 
 interface Appointment {
   id: string;
@@ -14,14 +15,16 @@ interface Appointment {
   doctor: string;
   specialty: string;
   date: string;
-  time: string;
   location: string;
+  slot: {
+    slot?: string;
+  };
   notes?: string;
   status: "completed" | "requested" | "approved" | "booked" | "cancelled";
 }
 
 const AppointmentsPage: React.FC = () => {
-  const { userId } = useContext(AppContext);
+  const { userId } = useContext(AppContext)!;
   const [rawAppointments, setRawAppointments] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<
@@ -36,12 +39,9 @@ const AppointmentsPage: React.FC = () => {
       }
       setIsLoading(true);
       try {
-        const response = await Axios({
-          url: `${summaryApi.getAppointmentData.endpoint}${userId}`,
-          method: summaryApi.getAppointmentData.method,
-          withCredentials: true,
-        });
-        let fetchedAppointments = response.data;
+        console.log("Fetching appointments for user:", userId);
+        const response = await getAppointmentData(userId)
+        let fetchedAppointments = response;
 
         // Ensure it's always an array
         if (!Array.isArray(fetchedAppointments)) {
@@ -80,7 +80,8 @@ const AppointmentsPage: React.FC = () => {
           month: "long",
           day: "numeric",
         }),
-        time: aptDate.toLocaleTimeString(undefined, {
+        slot: apt.slot,
+        time: aptDate.toLocaleTimeString(apt.slot.time, {
           hour: "2-digit",
           minute: "2-digit",
         }),
@@ -129,23 +130,24 @@ const AppointmentsPage: React.FC = () => {
   const renderAppointmentList = (list: Appointment[], emptyMessage: string) => {
     if (isLoading) {
       return (
-        <div className="text-center py-12 text-gray-500">
+        <div className="text-center py-12 text-body">
           Loading appointments...
         </div>
       );
     }
     if (list.length === 0) {
       return (
-        <div className="text-center py-12 text-gray-500">{emptyMessage}</div>
+        <div className="text-center py-12 text-body">{emptyMessage}</div>
       );
     }
+    console.log("list", list);
     return list.map((appointment) => (
       <AppointmentCard key={appointment.id} appointment={appointment} />
     ));
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-surface-cloud">
       <div className=" mx-auto p-6">
         {/* Tab Navigation */}
         <div className="grid grid-cols-4 mb-8 w-full">
@@ -154,7 +156,7 @@ const AppointmentsPage: React.FC = () => {
             className={`px-8 py-3 font-medium cursor-pointer rounded-t-lg transition-colors ${
               activeTab === "requested"
                 ? " global-bg-color text-white"
-                : "bg-white text-gray-600 hover:text-gray-900"
+                : "bg-white text-body hover:text-heading"
             }`}
           >
             Boooked Appointments
@@ -164,7 +166,7 @@ const AppointmentsPage: React.FC = () => {
             className={`px-8 py-3 font-medium cursor-pointer rounded-t-lg transition-colors ${
               activeTab === "approved"
                 ? " global-bg-color text-white"
-                : "bg-white text-gray-600 hover:text-gray-900"
+                : "bg-white text-body hover:text-heading"
             }`}
           >
             Approved Appointments
@@ -174,7 +176,7 @@ const AppointmentsPage: React.FC = () => {
             className={`px-8 py-3 font-medium cursor-pointer rounded-t-lg transition-colors ${
               activeTab === "booked"
                 ? " global-bg-color text-white"
-                : "bg-white text-gray-600 hover:text-gray-900"
+                : "bg-white text-body hover:text-heading"
             }`}
           >
             Submitted Appointments
@@ -184,7 +186,7 @@ const AppointmentsPage: React.FC = () => {
             className={`px-8 py-3 font-medium cursor-pointer rounded-t-lg transition-colors ${
               activeTab === "completed"
                 ? " global-bg-color text-white"
-                : "bg-white text-gray-600 hover:text-gray-900"
+                : "bg-white text-body hover:text-heading"
             }`}
           >
             Appointment History
@@ -195,10 +197,10 @@ const AppointmentsPage: React.FC = () => {
         <div className="bg-white rounded-b-lg rounded-tr-lg shadow-sm">
           <div className="p-6 border-b border-gray-200">
             <div className="flex items-center justify-between">
-              <h1 className="text-2xl font-semibold text-gray-900">
+              <h1 className="text-2xl font-semibold text-heading">
                 {getTabTitle()}
               </h1>
-              <button className="flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors">
+              <button className="flex items-center gap-2 text-body hover:text-heading transition-colors">
                 <FilterIcon className="w-5 h-5" />
                 Filter
               </button>

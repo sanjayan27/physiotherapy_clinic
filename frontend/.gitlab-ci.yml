@@ -13,16 +13,30 @@ build:
     - docker:dind
   script:
     - echo $CI_REGISTRY_PASSWORD | docker login -u $CI_REGISTRY_USER $CI_REGISTRY --password-stdin
-    - docker build -t $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA .
-    - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
-  only:
-    - sanjayan
+    # Build frontend Docker image with branch-specific tags
+    - docker build -t $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME-$CI_COMMIT_SHA .
+    - docker build -t $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME-latest .
+    # Push images to GitLab registry
+    - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME-$CI_COMMIT_SHA
+    - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME-latest
+  rules:
+    - if: '$CI_COMMIT_REF_NAME == "main"'
+    - if: '$CI_COMMIT_REF_NAME == "Stage"'
 
-deploy:
+deploy_staging:
   stage: deploy
   image: curlimages/curl:latest
   script:
     - echo "Triggering Render Deploy..."
-    - curl -X POST "https://api.render.com/deploy/$RENDER_SERVICE_ID?key=$RENDER_API_KEY"
-  only:
-    - sanjayan
+    - curl -X POST "https://api.render.com/deploy/$STAGE_RENDER_SERVICE_ID?key=$STAGE_RENDER_API_KEY"
+  rules:
+    - if: '$CI_COMMIT_REF_NAME == "Stage"'
+
+deploy_production:
+  stage: deploy
+  image: curlimages/curl:latest
+  script:
+    - echo "Triggering Render Deploy..."
+    - curl -X POST "https://api.render.com/deploy/$PROD_RENDER_SERVICE_ID?key=$PROD_RENDER_API_KEY"
+  rules:
+    - if: '$CI_COMMIT_REF_NAME == "main"'

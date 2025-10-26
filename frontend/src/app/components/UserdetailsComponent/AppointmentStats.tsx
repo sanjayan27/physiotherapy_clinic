@@ -5,6 +5,8 @@ import { AppContext } from "@/app/context/AppContext";
 import Axios from "@/app/utils/Axios";
 import summaryApi from "@/app/common/summary.api";
 import { isAxiosError } from "axios";
+import { getAppointmentData } from "@/app/services/patientAppointmentBooking.service";
+import toast from "react-hot-toast";
 
 interface Appointment {
   id: string;
@@ -13,7 +15,7 @@ interface Appointment {
 }
 
 export const AppointmentStats = () => {
-  const { userLogged, setUserId, userId } = useContext(AppContext);
+  const { userLogged, setUserId, userId } = useContext(AppContext)!;
 
   const [appointmentData, setAppointmentData] = useState<Appointment[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -41,14 +43,9 @@ export const AppointmentStats = () => {
   const fetchAppointmentData = async () => {
     setIsLoading(true);
     try {
-      const response = await Axios({
-        url: `${summaryApi.getAppointmentData.endpoint}${userId}`,
-        method: summaryApi.getAppointmentData.method,
-        withCredentials: true,
-      });
-      if (response?.data) {
-        let fetchedAppointments = response?.data;
-        console.log('fetc',fetchedAppointments)
+      const response = await getAppointmentData(String(userId))
+      if (response) {
+        let fetchedAppointments = response;
         // Ensure it's always an array
         if (!Array?.isArray(fetchedAppointments)) {
           fetchedAppointments = [fetchedAppointments];
@@ -57,7 +54,7 @@ export const AppointmentStats = () => {
         setAppointmentData(fetchedAppointments);
       }
     } catch (error: unknown) {
-      if (isAxiosError(error) && error.response?.status === 404) {
+      if (isAxiosError(error) && error.status === 404) {
         // API returns 404 when no appointments are found, treat as empty list.
         setAppointmentData([]);
       } else {

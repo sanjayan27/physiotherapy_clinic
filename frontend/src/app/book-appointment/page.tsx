@@ -8,12 +8,12 @@ import { useState } from "react";
 export default function page() {
   const [existingUser, setExistingUser] = useState(false);
   return (
-    <section className="w-full min-h-screen bg-gradient-to-t from-teal-100 to-white py-10">
+<section className="w-full min-h-screen bg-brand-soft py-10">
       <div className="flex flex-col gap-2 text-center">
-        <h1 className="text-2xl md:text-3xl font-bold w-full bg-gradient-to-r from-teal-500  to-teal-800 bg-clip-text text-transparent">
+<h1 className="text-2xl md:text-3xl font-bold w-full text-brand-gradient">
           Book Your Appointment
         </h1>
-        <p className="text-gray-500 text-lg ">
+        <p className="text-body text-lg ">
           Start by telling us your concern, and we'll guide you through the
           rest.
         </p>

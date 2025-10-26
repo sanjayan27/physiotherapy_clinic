@@ -12,7 +12,7 @@ export default function AboutPage() {
         <meta name="description" content="Our team has only one mission: Make you smile" />
       </Head>
       
-      <div className="min-h-screen bg-gradient-to-b from-white  to-teal-100 font-sans ">
+<div className="min-h-screen bg-brand-soft font-sans ">
         <div className="container mx-auto px-4 py-12">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             
@@ -68,20 +68,20 @@ export default function AboutPage() {
               
               {/* Main Heading */}
               <div>
-                <h1 className="text-2xl lg:text-4xl font-bold text-gray-900 leading-tight mb-6">
+                <h1 className="text-2xl lg:text-4xl font-bold text-heading leading-tight mb-6">
                   Our team has only one mission:{' '}
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-600 to-green-800">
+<span className="text-brand-gradient">
                     Make you smile
                   </span>
                 </h1>
                 
-                <p className="text-md text-gray-600 leading-relaxed">
+                <p className="text-md text-body leading-relaxed">
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut 
                   maecenas viverra at quis nibh. Tortor, quis aenean vitae, enim, 
                   magna tortor. Sed vivamus porttitor tempus
                 </p>
                 
-                <p className="mt-6 text-lg text-gray-600 leading-relaxed ">
+                <p className="mt-6 text-lg text-body leading-relaxed ">
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut 
                   maecenas viverra at quis nibh. Tortor, quis aenean vitae, enim, 
                   magna tortor. Sed vivamus porttitor tempus
@@ -95,15 +95,15 @@ export default function AboutPage() {
               <div className="grid grid-cols-3 gap-6 pt-8">
                 <div className="text-center">
                   <div className="text-3xl font-bold global-text-color-teal mb-2">500+</div>
-                  <div className="text-sm text-gray-600">Happy Patients</div>
+                  <div className="text-sm text-body">Happy Patients</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-3xl font-bold text-teal-700 mb-2">15+</div>
-                  <div className="text-sm text-gray-600">Years Experience</div>
+                  <div className="text-3xl font-bold global-text-color-teal mb-2">15+</div>
+                  <div className="text-sm text-body">Years Experience</div>
                 </div>
                 <div className="text-center">
                   <div className="text-3xl font-bold global-text-color-teal mb-2">24/7</div>
-                  <div className="text-sm text-gray-600">Support</div>
+                  <div className="text-sm text-body">Support</div>
                 </div>
               </div>
             </div>

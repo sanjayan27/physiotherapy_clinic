@@ -15,6 +15,7 @@ export const SideBar: React.FC<SideBarProps> = ({ setActiveTab, activeTab }) => 
     { id: "calendar", icon: "📅", label: "Calendar & Slots" },
     { id: "appointments", icon: "⏰", label: "Today's Appointments" },
     { id: "patients", icon: "👥", label: "Patient Records" },
+    { id: "requested", icon: "📅", label: "Requested Appointments" },
     { id: "messages", icon: "💬", label: "WhatsApp Messages" },
   ];
 

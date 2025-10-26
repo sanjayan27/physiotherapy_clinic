@@ -7,6 +7,8 @@ import { AppContextProvider } from "./context/AppContext";
 import { usePathname } from "next/navigation";
 import { WhatsappChatbot } from "./components/WhatsappChatbot";
 import { Toaster } from "react-hot-toast";
+import Script from "next/script";
+import MuiThemeProvider from "./mui/ThemeProvider";
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
@@ -46,13 +48,16 @@ export default function RootLayout({
           antialiased
         `}
       >
-        
-          <AppContextProvider>
-            {!(lastSegment === "admin-dashboard") && <Header />}
-            <section>{children}</section>
-            <WhatsappChatbot />
-            {!(lastSegment === "admin-dashboard") && <Footer />}
-          </AppContextProvider>
+        {/* Load runtime env before any interactive scripts */}
+        <Script id="runtime-env" src="/env.js" strategy="beforeInteractive" />
+          <MuiThemeProvider>
+            <AppContextProvider>
+              {!(lastSegment === "admin-dashboard") && <Header />}
+              <section>{children}</section>
+              <WhatsappChatbot />
+              {!(lastSegment === "admin-dashboard") && <Footer />}
+            </AppContextProvider>
+          </MuiThemeProvider>
         
         <Toaster />
       </body>

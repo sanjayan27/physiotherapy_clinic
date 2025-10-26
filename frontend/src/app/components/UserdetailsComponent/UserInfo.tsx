@@ -9,6 +9,11 @@ import Axios from "@/app/utils/Axios";
 import summaryApi from "@/app/common/summary.api";
 // Assuming toast is set up in the project
 import { toast } from "react-toastify";
+import { updateUserDetails } from "@/app/services/patientAppointmentBooking.service";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { TextField, InputAdornment } from "@mui/material";
+import { Calendar } from "lucide-react";
 
 export interface UserDetails {
   id: string;
@@ -57,19 +62,16 @@ export const UserInfo = ({ userDetails, onUpdateSuccess }: UserInfoProps) => {
   const handleUpdate = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await Axios({
-        url: `${summaryApi.updateUserDetails.endpoint}/${userDetails.id}`,
-        method: summaryApi.updateUserDetails.method,
-        data: {
+      const response = await updateUserDetails({
           ...formData,
           bdDate: formData.bdDate
             ? new Date(formData.bdDate).toISOString()
             : null,
         },
-        withCredentials: true,
-      });
+        userDetails.id
+      )
 
-      if (response.data) {
+      if (response) {
         toast.success("Details updated successfully!");
         setIsEditing(false);
         onUpdateSuccess();
@@ -113,13 +115,30 @@ export const UserInfo = ({ userDetails, onUpdateSuccess }: UserInfoProps) => {
               >
                 Date of Birth
               </label>
-              <input
-                type="date"
-                id="bdDate"
-                name="bdDate"
-                value={formData.bdDate}
-                onChange={handleInputChange}
-                className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
+              <DatePicker
+                selected={formData.bdDate ? new Date(formData.bdDate) : null}
+                onChange={(d: Date | null) => setFormData((prev) => ({ ...prev, bdDate: d ? d.toISOString().split("T")[0] : "" }))}
+                dateFormat="yyyy-MM-dd"
+                popperPlacement="bottom-start"
+                popperModifiers={[{ name: "offset", options: { offset: [0, 8] } }]}
+                calendarClassName="rdp-calendar"
+                popperClassName="rdp-popper"
+                showPopperArrow={false}
+                customInput={
+                  <TextField
+                    id="bdDate"
+                    name="bdDate"
+                    size="small"
+                    fullWidth
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <Calendar size={16} />
+                        </InputAdornment>
+                      ),
+                    }}
+                  /> as any
+                }
                 required
               />
             </div>

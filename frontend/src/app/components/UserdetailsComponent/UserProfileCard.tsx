@@ -5,24 +5,18 @@ import { AppContext } from "@/app/context/AppContext";
 import ProfileImg from "@/app/assets/OIP.webp";
 import { UserInfo, UserDetails } from "./UserInfo";
 import { FiEdit3 } from "react-icons/fi";
-import { AxiosToastError } from "@/app/utils/AxiosToastSended";
-import Axios from "@/app/utils/Axios";
-import summaryApi from "@/app/common/summary.api";
+import { getUserDetails } from "@/app/services/patientAppointmentBooking.service";
 
 const UserProfileCard = () => {
   const [userDetails, setUserDetails] = useState<UserDetails | null>(null);
-  const { userLogged, setUserId, userId } = useContext(AppContext);
+  const { userLogged, setUserId, userId } = useContext(AppContext)!;
   const handleUserDetails = async () => {
     try {
-      const response = await Axios({
-        url: summaryApi.getUserDetails.endpoint,
-        method: summaryApi.getUserDetails.method,
-        withCredentials: true,
-      });
-      if (response.data) {
+      const response = await getUserDetails()
+      if (response) {
         // TODO: Ensure patientId is part of the API response
-        setUserId(response?.data?.id);
-        setUserDetails({ ...response?.data });
+        setUserId(response?.id);
+        setUserDetails({ ...response });
       }
     } catch (error) {
       console.error("Error fetching user details:", error);

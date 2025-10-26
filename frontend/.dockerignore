@@ -1,0 +1,29 @@
+# Reduce Docker build context size
+# Node/npm
+node_modules
+npm-debug.log*
+
+# Next.js build output
+.next
+out
+
+# Git and editor cruft
+.git
+.gitignore
+.vscode
+.idea
+.DS_Store
+
+# Local env files
+# Keep base .env so container can read runtime config; ignore other env variants
+.env.*
+
+# Docker files not needed in context
+Dockerfile
+.dockerignore
+
+# Logs
+*.log
+
+# Misc
+coverage

@@ -4,7 +4,7 @@ import { Calendar } from "lucide-react";
 
 export default function Footer() {
   return (
-    <footer className="bg-slate-700 text-white py-6 px-4 sm:px-6 lg:px-8">
+    <footer className="bg-brand-bar text-white py-6 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         {/* Left side - Logo and Copyright */}
         <div className="flex items-center space-x-6">
